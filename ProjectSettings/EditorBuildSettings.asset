@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/VNCreator/_Demo/Scenes/PlayScene.unity
     guid: 8d66d048c6b5bd045a648e731464ebcc
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 4fb5eccec5bc4f44fa8e93e0cbdba87b, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 36a3c6b9e1571e14c8d887f73288a22d, type: 2}
