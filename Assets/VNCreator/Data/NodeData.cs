@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace VNCreator
 {
@@ -8,7 +9,7 @@ namespace VNCreator
     public class NodeData
     {
         public string guid;
-        public Sprite characterSpr;
+        public AssetReference characterSpr;
         public string characterName;
         public string dialogueText;
         public Sprite backgroundSpr;
@@ -19,6 +20,8 @@ namespace VNCreator
         public Rect nodePosition;
         public AudioClip soundEffect;
         public AudioClip backgroundMusic;
+
+        public AddressableSprite CharacterSpr => new(characterSpr);
 
         public NodeData()
         {

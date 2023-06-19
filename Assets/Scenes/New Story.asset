@@ -15,7 +15,11 @@ MonoBehaviour:
   links: []
   nodes:
   - guid: 964fc6e1-f59c-48c7-b51d-5a1ac9d31d24
-    characterSpr: {fileID: 0}
+    characterSpr:
+      m_AssetGUID: e89e94c938bf20549b956865c8ecab8d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     characterName: 
     dialogueText: 
     backgroundSpr: {fileID: 0}
@@ -26,9 +30,9 @@ MonoBehaviour:
     - 
     nodePosition:
       serializedVersion: 2
-      x: 293
-      y: 119
-      width: 499
-      height: 305
+      x: 293.6
+      y: 119.2
+      width: 499.19998
+      height: 303.2
     soundEffect: {fileID: 0}
     backgroundMusic: {fileID: 0}

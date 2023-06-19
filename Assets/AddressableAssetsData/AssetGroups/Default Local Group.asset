@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 5ce28b7a7f6dd594bbb845fc42b01013
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: e89e94c938bf20549b956865c8ecab8d
+    m_Address: Assets/VNCreator/_Demo/Sprites/Characters/spr_coon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5763be0b8ebd3094f8e2cc7b7b2e8364, type: 2}
   m_SchemaSet:

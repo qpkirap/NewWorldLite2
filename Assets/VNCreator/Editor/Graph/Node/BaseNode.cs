@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
 using UnityEditor;
 #if UNITY_EDITOR
+using Cysharp.Threading.Tasks;
 using UnityEditor.Experimental.GraphView;
 #endif
 using UnityEngine;
 using UnityEngine.UIElements;
-using System;
+using UnityEditor.AddressableAssets;
 #if UNITY_EDITOR
 using UnityEditor.UIElements;
+using UnityEngine.AddressableAssets;
 #endif
 
 namespace VNCreator
@@ -39,19 +41,7 @@ namespace VNCreator
 
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
 
-            VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
-            charSprDisplay.style.backgroundImage = node.nodeData.characterSpr ? node.nodeData.characterSpr.texture : null;
-
-            ObjectField charSprField = this.Query<ObjectField>("Icon_Selection").First();
-            charSprField.objectType = typeof(Sprite);
-            charSprField.value = node.nodeData.characterSpr;
-            charSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
-                e =>
-                {
-                    node.nodeData.characterSpr = (Sprite)e.newValue;
-                    charSprDisplay.style.backgroundImage = node.nodeData.characterSpr ? node.nodeData.characterSpr.texture : null;
-                }
-            );
+            LoadAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
             charNameField.value = node.nodeData.characterName;
@@ -105,6 +95,62 @@ namespace VNCreator
                     backSprDisplay.style.backgroundImage = node.nodeData.backgroundSpr ? node.nodeData.backgroundSpr.texture : null;
                 }
             );
+        }
+
+        private async UniTask LoadAsync()
+        {
+            VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
+
+            await UpdateBack();
+
+            ObjectField charSprField = this.Query<ObjectField>("Icon_Selection").First();
+            charSprField.objectType = typeof(Sprite);
+            charSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
+                async e =>
+                {
+                    var editorAsset = GetAssetReferenceFromGUID(AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(e.newValue)));
+                    
+                    node.nodeData.characterSpr = editorAsset;
+                    
+                    await UpdateBack();
+                }
+            );
+
+            
+            async UniTask UpdateBack()
+            {
+                if (node.nodeData.CharacterSpr.RuntimeKeyIsValid)
+                {
+                    var sprite = await node.nodeData.CharacterSpr.LoadAsync();
+
+                    charSprDisplay.style.backgroundImage = sprite.texture;
+                }
+                else
+                {
+                    charSprDisplay.style.backgroundImage = null;
+                }
+            }
+        }
+        
+        private AssetReference GetAssetReferenceFromGUID(string guid)
+        {
+            var settings = AddressableAssetSettingsDefaultObject.Settings;
+            if (settings == null)
+                return null;
+
+            var groups = settings.groups;
+            foreach (var group in groups)
+            {
+                var entry = group.GetAssetEntry(guid);
+
+                if (entry == null) continue;
+
+                var asset = new AssetReference(entry.guid);
+
+                return asset;
+            }
+
+            return null;
         }
     }
 #endif

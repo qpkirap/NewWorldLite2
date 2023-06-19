@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -71,7 +72,7 @@ namespace VNCreator
             characterNameTxt.text = currentNode.characterName;
             if (currentNode.characterSpr != null)
             {
-                characterImg.sprite = currentNode.characterSpr;
+                //characterImg.sprite = currentNode.CharacterSpr.LoadAsync().ToCoroutine();
                 characterImg.color = Color.white;
             }
             else
