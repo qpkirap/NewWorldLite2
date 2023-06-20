@@ -41,7 +41,7 @@ namespace VNCreator
 
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
 
-            LoadAsync();
+            UpdateCharacterSprAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
             charNameField.value = node.nodeData.characterName;
@@ -97,29 +97,30 @@ namespace VNCreator
             );
         }
 
-        private async UniTask LoadAsync()
+        private async UniTask UpdateCharacterSprAsync()
         {
             VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
 
-            await UpdateBack();
-
             ObjectField charSprField = this.Query<ObjectField>("Icon_Selection").First();
             charSprField.objectType = typeof(Sprite);
-            charSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
-                async e =>
-                {
-                    var editorAsset = GetAssetReferenceFromGUID(AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(e.newValue)));
-                    
-                    node.nodeData.characterSpr = editorAsset;
-                    
-                    await UpdateBack();
-                }
-            );
 
+            charSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
+                ChangeEvent
+            );
             
-            async UniTask UpdateBack()
+            await UpdateFieldBgImage();
+            
+            async void ChangeEvent(ChangeEvent<Object> e)
             {
-                if (node.nodeData.CharacterSpr.RuntimeKeyIsValid)
+                node.nodeData.characterSpr.SetEditorAsset(e.newValue);
+
+                await UpdateFieldBgImage();
+            }
+
+            async UniTask UpdateFieldBgImage()
+            {
+                if (node.nodeData.characterSpr != null 
+                    && node.nodeData.CharacterSpr is { RuntimeKeyIsValid: true })
                 {
                     var sprite = await node.nodeData.CharacterSpr.LoadAsync();
 
@@ -139,6 +140,7 @@ namespace VNCreator
                 return null;
 
             var groups = settings.groups;
+            
             foreach (var group in groups)
             {
                 var entry = group.GetAssetEntry(guid);

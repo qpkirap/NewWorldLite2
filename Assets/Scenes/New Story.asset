@@ -17,9 +17,10 @@ MonoBehaviour:
   - guid: 964fc6e1-f59c-48c7-b51d-5a1ac9d31d24
     characterSpr:
       m_AssetGUID: e89e94c938bf20549b956865c8ecab8d
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+      m_SubObjectName: spr_coon
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
     characterName: 
     dialogueText: 
     backgroundSpr: {fileID: 0}
