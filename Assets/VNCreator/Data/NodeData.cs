@@ -20,6 +20,7 @@ namespace VNCreator
         public Rect nodePosition;
         public AudioClip soundEffect;
         public AudioClip backgroundMusic;
+        public List<AssetReference> characterSprList;
 
         public AddressableSprite CharacterSpr => new(characterSpr);
 

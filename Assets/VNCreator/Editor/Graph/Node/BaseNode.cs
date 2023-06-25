@@ -1,13 +1,16 @@
 ﻿#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
+using System.Linq;
 using UnityEditor;
 #if UNITY_EDITOR
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEditor.Experimental.GraphView;
 #endif
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.AddressableAssets;
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor.UIElements;
 using UnityEngine.AddressableAssets;
@@ -42,6 +45,33 @@ namespace VNCreator
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
 
             UpdateCharacterSprAsync();
+            
+            ListView view = this.Query<ListView>("Char_Img_List");
+            view.itemsSource = node.nodeData.characterSprList;
+            view.selectionType = SelectionType.Single;
+            
+            view.itemsChosen += objects => Debug.Log(objects);
+            view.selectionChanged += objects =>
+            {
+                Debug.Log(objects);
+                var test = (UnityEngine.Object)objects?.First();
+                
+                AssetDatabase.OpenAsset(test);
+            };
+
+            view.makeItem =() => new Label();
+            view.bindItem =(e, i) =>  (e as Label).text = node.nodeData.characterSprList[i]?.SubObjectName;
+            view.showAddRemoveFooter = true;
+            
+            view.RegisterCallback<ChangeEvent<UnityEngine.Object>>((e) =>
+            {
+                Debug.Log($"{e.newValue.name}");
+            });
+            
+            var listSelField = this.Query<ObjectField>("Char_Img_List_Sel").First();
+            listSelField.objectType = typeof(Sprite);
+            
+            
 
             TextField charNameField = this.Query<TextField>("Char_Name");
             charNameField.value = node.nodeData.characterName;
