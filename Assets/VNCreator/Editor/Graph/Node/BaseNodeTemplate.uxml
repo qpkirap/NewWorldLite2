@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:VisualElement class="row">
+    <ui:VisualElement name="VisualElement" class="row">
         <ui:VisualElement>
             <ui:Label text="Character sprite:" class="min_header" />
             <ui:VisualElement name="Char_Img" class="char_img">
@@ -10,7 +10,6 @@
                 <uie:ObjectField name="Back_Selector" allow-scene-objects="false" class="char_selector" />
             </ui:VisualElement>
             <ui:ListView focusable="true" name="Char_Img_List" />
-            <uie:ObjectField label="Object Field" name="Char_Img_List_Sel" />
         </ui:VisualElement>
         <ui:VisualElement>
             <ui:Label text="Character Name" class="min_header" />

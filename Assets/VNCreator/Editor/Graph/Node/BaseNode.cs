@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 #if UNITY_EDITOR
@@ -45,33 +46,7 @@ namespace VNCreator
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
 
             UpdateCharacterSprAsync();
-            
-            ListView view = this.Query<ListView>("Char_Img_List");
-            view.itemsSource = node.nodeData.characterSprList;
-            view.selectionType = SelectionType.Single;
-            
-            view.itemsChosen += objects => Debug.Log(objects);
-            view.selectionChanged += objects =>
-            {
-                Debug.Log(objects);
-                var test = (UnityEngine.Object)objects?.First();
-                
-                AssetDatabase.OpenAsset(test);
-            };
-
-            view.makeItem =() => new Label();
-            view.bindItem =(e, i) =>  (e as Label).text = node.nodeData.characterSprList[i]?.SubObjectName;
-            view.showAddRemoveFooter = true;
-            
-            view.RegisterCallback<ChangeEvent<UnityEngine.Object>>((e) =>
-            {
-                Debug.Log($"{e.newValue.name}");
-            });
-            
-            var listSelField = this.Query<ObjectField>("Char_Img_List_Sel").First();
-            listSelField.objectType = typeof(Sprite);
-            
-            
+            InitListViewAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
             charNameField.value = node.nodeData.characterName;
@@ -125,6 +100,55 @@ namespace VNCreator
                     backSprDisplay.style.backgroundImage = node.nodeData.backgroundSpr ? node.nodeData.backgroundSpr.texture : null;
                 }
             );
+        }
+
+        private async UniTask InitListViewAsync()
+        {
+            ListView view = this.Query<ListView>("Char_Img_List");
+            var tempList = new List<ObjectField>();
+
+            if (node.nodeData.characterSprList is { Count: > 0 })
+            {
+                for (var i = 0; i < node.nodeData.characterSprList.ToList().Count; i++)
+                {
+                    var item = node.nodeData.characterSprList.ToList()[i];
+                    ObjectField field = new ObjectField();
+
+                    BindItem(field, i);
+
+                    if (item != null && item.RuntimeKeyIsValid())
+                        item.SetEditorAsset(item.editorAsset);
+                    
+                    tempList.Add(field);
+                }
+            }
+            
+            view.itemsSource = tempList;
+            view.selectionType = SelectionType.Single;
+            view.showAddRemoveFooter = true;
+
+            view.makeItem = () => new ObjectField();
+            view.bindItem = BindItem;
+
+            void BindItem(VisualElement e, int index)
+            {
+                var convert = e as ObjectField;
+                
+                convert.objectType = typeof(Sprite);
+            
+                convert.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
+                    e =>
+                    {
+                        var path = AssetDatabase.GetAssetPath(e.newValue);
+                        var guid = AssetDatabase.AssetPathToGUID(path);
+                        var asset = GetAssetReferenceFromGUID(guid);
+                        
+                        node.nodeData.characterSprList.Add(asset);
+
+                        Debug.Log($"convert.RegisterCallback {e.newValue.name}");
+                    }
+                );
+            }
         }
 
         private async UniTask UpdateCharacterSprAsync()
