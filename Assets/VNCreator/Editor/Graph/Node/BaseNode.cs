@@ -109,15 +109,16 @@ namespace VNCreator
 
             if (node.nodeData.characterSprList is { Count: > 0 })
             {
-                for (var i = 0; i < node.nodeData.characterSprList.ToList().Count; i++)
+                for (var i = 0; i < node.nodeData.characterSprList.Count; i++)
                 {
-                    var item = node.nodeData.characterSprList.ToList()[i];
+                    var item = node.nodeData.characterSprList[i];
+                    
                     ObjectField field = new ObjectField();
 
                     BindItem(field, i);
 
                     if (item != null && item.RuntimeKeyIsValid())
-                        item.SetEditorAsset(item.editorAsset);
+                        field.value = item.editorAsset;
                     
                     tempList.Add(field);
                 }
