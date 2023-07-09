@@ -130,12 +130,22 @@ namespace VNCreator
 
             view.makeItem = () => new ObjectField();
             view.bindItem = BindItem;
+            view.unbindItem = UnbindItem;
+            
+            void UnbindItem(VisualElement e, int index)
+            {
+                node.nodeData.characterSprList.RemoveAt(index);
+            }
 
             void BindItem(VisualElement e, int index)
             {
+                Debug.Log("Bind");
+                
                 var convert = e as ObjectField;
                 
                 convert.objectType = typeof(Sprite);
+                
+                node.nodeData.characterSprList.Add(null);
             
                 convert.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                     e =>
@@ -144,7 +154,7 @@ namespace VNCreator
                         var guid = AssetDatabase.AssetPathToGUID(path);
                         var asset = GetAssetReferenceFromGUID(guid);
                         
-                        node.nodeData.characterSprList.Add(asset);
+                        node.nodeData.characterSprList.Insert(index, asset);
 
                         Debug.Log($"convert.RegisterCallback {e.newValue.name}");
                     }
