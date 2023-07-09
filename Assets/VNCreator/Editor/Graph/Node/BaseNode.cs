@@ -114,13 +114,20 @@ namespace VNCreator
                     var item = node.nodeData.characterSprList[i];
                     
                     ObjectField field = new ObjectField();
+                    
+                    tempList.Add(field);
 
                     BindItem(field, i);
 
                     if (item != null && item.RuntimeKeyIsValid())
-                        field.value = item.editorAsset;
-                    
-                    tempList.Add(field);
+                    {
+                        var adrSprite = new AddressableSprite(item);
+
+                        var sprite = await adrSprite.LoadAsync();
+
+                        field.SetValueWithoutNotify(sprite);
+                        field.SendEvent(new ChangeEvent<ChangeEvent<UnityEngine.Object>>());
+                    }
                 }
             }
             
@@ -128,37 +135,77 @@ namespace VNCreator
             view.selectionType = SelectionType.Single;
             view.showAddRemoveFooter = true;
 
+            SyncLists();
+
             view.makeItem = () => new ObjectField();
             view.bindItem = BindItem;
             view.unbindItem = UnbindItem;
-            
+
             void UnbindItem(VisualElement e, int index)
             {
-                node.nodeData.characterSprList.RemoveAt(index);
+                SyncLists();
             }
 
             void BindItem(VisualElement e, int index)
             {
-                Debug.Log("Bind");
+                Debug.Log($"Bind {index} count {tempList.Count}");
                 
                 var convert = e as ObjectField;
                 
                 convert.objectType = typeof(Sprite);
+
+                tempList[index] = convert;
                 
-                node.nodeData.characterSprList.Add(null);
-            
                 convert.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                     e =>
                     {
-                        var path = AssetDatabase.GetAssetPath(e.newValue);
-                        var guid = AssetDatabase.AssetPathToGUID(path);
-                        var asset = GetAssetReferenceFromGUID(guid);
+                        tempList[index].value = e.newValue;
                         
-                        node.nodeData.characterSprList.Insert(index, asset);
+                        SyncLists();
 
-                        Debug.Log($"convert.RegisterCallback {e.newValue.name}");
+                        Debug.Log($"convert.RegisterCallback {e.newValue}");
                     }
                 );
+            }
+
+            void SyncLists()
+            {
+                node.nodeData.characterSprList ??= new();
+
+                var delta = tempList.Count - node.nodeData.characterSprList.Count;
+
+                //sync count
+                if (delta > 0)
+                {
+                    for (int i = 0; i < delta; i++)
+                    {
+                        node.nodeData.characterSprList.Add(null);
+                    }
+                }
+                else
+                {
+                    node.nodeData.characterSprList
+                        .RemoveRange(Mathf.Clamp(node.nodeData.characterSprList.Count - 1, 0, node.nodeData.characterSprList.Count - 1),
+                            Mathf.Abs(delta));
+                }
+
+                //syncValue
+                for (var i = 0; i < tempList.Count; i++)
+                {
+                    var tempItem = tempList[i];
+
+                    if (tempItem == null)
+                    {
+                        node.nodeData.characterSprList[i] = null;
+                    }
+                    else
+                    {
+                        var asset = GetAssetReferenceFromGUID(tempItem.value);
+
+                        if (asset != null) node.nodeData.characterSprList[i] = asset;
+                        else node.nodeData.characterSprList[i] = null;
+                    }
+                }
             }
         }
 
@@ -196,6 +243,15 @@ namespace VNCreator
                     charSprDisplay.style.backgroundImage = null;
                 }
             }
+        }
+
+        private AssetReference GetAssetReferenceFromGUID<T>(T value) where T : UnityEngine.Object 
+        {
+            var path = AssetDatabase.GetAssetPath(value);
+            var guid = AssetDatabase.AssetPathToGUID(path);
+            var asset = GetAssetReferenceFromGUID(guid);
+
+            return asset;
         }
         
         private AssetReference GetAssetReferenceFromGUID(string guid)

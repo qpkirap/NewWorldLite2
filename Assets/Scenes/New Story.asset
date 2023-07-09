@@ -31,9 +31,14 @@ MonoBehaviour:
     - 
     nodePosition:
       serializedVersion: 2
-      x: 293.6
-      y: 119.2
-      width: 499.19998
-      height: 303.2
+      x: 293.70297
+      y: 119.762375
+      width: 498.05936
+      height: 346.93066
     soundEffect: {fileID: 0}
     backgroundMusic: {fileID: 0}
+    characterSprList:
+    - m_AssetGUID: e89e94c938bf20549b956865c8ecab8d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
