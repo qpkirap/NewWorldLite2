@@ -105,107 +105,48 @@ namespace VNCreator
         private async UniTask InitListViewAsync()
         {
             ListView view = this.Query<ListView>("Char_Img_List");
-            var tempList = new List<ObjectField>();
-
-            if (node.nodeData.characterSprList is { Count: > 0 })
-            {
-                for (var i = 0; i < node.nodeData.characterSprList.Count; i++)
-                {
-                    var item = node.nodeData.characterSprList[i];
-                    
-                    ObjectField field = new ObjectField();
-                    
-                    tempList.Add(field);
-
-                    BindItem(field, i);
-
-                    if (item != null && item.RuntimeKeyIsValid())
-                    {
-                        var adrSprite = new AddressableSprite(item);
-
-                        var sprite = await adrSprite.LoadAsync();
-
-                        field.SetValueWithoutNotify(sprite);
-                        field.SendEvent(new ChangeEvent<ChangeEvent<UnityEngine.Object>>());
-                    }
-                }
-            }
             
-            view.itemsSource = tempList;
-            view.selectionType = SelectionType.Single;
-            view.showAddRemoveFooter = true;
-
-            SyncLists();
-
+            view.itemsSource = node.nodeData.characterSprList;
+            
             view.makeItem = () => new ObjectField();
             view.bindItem = BindItem;
             view.unbindItem = UnbindItem;
+            view.selectionType = SelectionType.Single;
+            view.showAddRemoveFooter = true;
+
+            view.RefreshItems();
 
             void UnbindItem(VisualElement e, int index)
             {
-                SyncLists();
             }
 
-            void BindItem(VisualElement e, int index)
+            async void BindItem(VisualElement e, int index)
             {
-                Debug.Log($"Bind {index} count {tempList.Count}");
-                
                 var convert = e as ObjectField;
                 
                 convert.objectType = typeof(Sprite);
 
-                tempList[index] = convert;
-                
                 convert.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                     e =>
                     {
-                        tempList[index].value = e.newValue;
-                        
-                        SyncLists();
+                        node.nodeData.characterSprList[index] = 
+                            GetAssetReferenceFromGUID(e.newValue);
 
                         Debug.Log($"convert.RegisterCallback {e.newValue}");
                     }
                 );
-            }
+                
+                var item = node.nodeData.characterSprList[index];
 
-            void SyncLists()
-            {
-                node.nodeData.characterSprList ??= new();
-
-                var delta = tempList.Count - node.nodeData.characterSprList.Count;
-
-                //sync count
-                if (delta > 0)
+                if (item != null && item.RuntimeKeyIsValid())
                 {
-                    for (int i = 0; i < delta; i++)
-                    {
-                        node.nodeData.characterSprList.Add(null);
-                    }
-                }
-                else
-                {
-                    node.nodeData.characterSprList
-                        .RemoveRange(Mathf.Clamp(node.nodeData.characterSprList.Count - 1, 0, node.nodeData.characterSprList.Count - 1),
-                            Mathf.Abs(delta));
-                }
+                    var adrSprite = new AddressableSprite(item);
 
-                //syncValue
-                for (var i = 0; i < tempList.Count; i++)
-                {
-                    var tempItem = tempList[i];
+                    var sprite = await adrSprite.LoadAsync();
 
-                    if (tempItem == null)
-                    {
-                        node.nodeData.characterSprList[i] = null;
-                    }
-                    else
-                    {
-                        var asset = GetAssetReferenceFromGUID(tempItem.value);
-
-                        if (asset != null) node.nodeData.characterSprList[i] = asset;
-                        else node.nodeData.characterSprList[i] = null;
-                    }
+                    convert.value = sprite;
                 }
+                else convert.value = null;
             }
         }
 

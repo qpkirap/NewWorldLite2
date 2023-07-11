@@ -24,6 +24,8 @@ namespace VNCreator.Editors
 
         void MouseDown(MouseDownEvent _e)
         {
+            Debug.Log($"MouseDown button = {_e.button}");
+            
             if (_e.button == 1)
             {
                 mousePosition = Event.current.mousePosition;
@@ -35,6 +37,8 @@ namespace VNCreator.Editors
                 _menu.AddItem(new GUIContent("Add Node (End)"), false, () => graphView.GenerateNode("", mousePosition, 1, false, true));
                 _menu.AddItem(new GUIContent("Save"), false, () => save.SaveGraph(storyObj, graphView));
                 _menu.ShowAsContext();
+                
+                Debug.Log($"mousePosition: {mousePosition} itemCount{_menu.GetItemCount()}");
             }
         }
         void CreateGraphView(int _nodeCount)
