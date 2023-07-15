@@ -69,7 +69,7 @@ namespace VNCreator
 
         IEnumerator DisplayCurrentNode()
         {
-            characterNameTxt.text = currentNode.characterName;
+            characterNameTxt.text = currentNode.CharacterName;
             if (currentNode.characterSpr != null)
             {
                 //characterImg.sprite = currentNode.CharacterSpr.LoadAsync().ToCoroutine();

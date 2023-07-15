@@ -6,8 +6,8 @@ namespace VNCreator
     [CreateAssetMenu(fileName = "New Story", menuName = "New Story")]
     public class StoryObject : ScriptableObject
     {
-        [HideInInspector] public List<Link> links;
-        [HideInInspector] public List<NodeData> nodes;
+        public List<Link> links;
+        public List<NodeData> nodes;
 
         public void SetLists(List<NodeData> _nodes, List<Link> _links)
         {

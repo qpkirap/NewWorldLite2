@@ -49,11 +49,12 @@ namespace VNCreator
             InitListViewAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
-            charNameField.value = node.nodeData.characterName;
+            charNameField.value = node.nodeData.CharacterName;
             charNameField.RegisterValueChangedCallback(
                 e =>
                 {
-                    node.nodeData.characterName = charNameField.value;
+                    node.nodeData.SetValue("characterName", charNameField.value);
+                    //node.nodeData.characterName = charNameField.value;
                 }
             );
 

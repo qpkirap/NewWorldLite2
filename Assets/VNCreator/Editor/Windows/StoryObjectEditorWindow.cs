@@ -22,29 +22,25 @@ namespace VNCreator.Editors
             window.minSize = new Vector2(200, 100);
         }
 
-        void MouseDown(MouseDownEvent _e)
+        private void ShowContextMenu(KeyDownEvent keyEvent)
         {
-            Debug.Log($"MouseDown button = {_e.button}");
+            if (keyEvent.keyCode != KeyCode.Space) return; 
             
-            if (_e.button == 1)
-            {
-                mousePosition = Event.current.mousePosition;
-                GenericMenu _menu = new GenericMenu();
-                _menu.AddItem(new GUIContent("Add Node"), false, () => graphView.GenerateNode("", mousePosition, 1, false, false));
-                _menu.AddItem(new GUIContent("Add Node (2 Choices)"), false, () => graphView.GenerateNode("", mousePosition, 2, false, false));
-                _menu.AddItem(new GUIContent("Add Node (3 Choices)"), false, () => graphView.GenerateNode("", mousePosition, 3, false, false));
-                _menu.AddItem(new GUIContent("Add Node (Start)"), false, () => graphView.GenerateNode("", mousePosition, 1, true, false));
-                _menu.AddItem(new GUIContent("Add Node (End)"), false, () => graphView.GenerateNode("", mousePosition, 1, false, true));
-                _menu.AddItem(new GUIContent("Save"), false, () => save.SaveGraph(storyObj, graphView));
-                _menu.ShowAsContext();
-                
-                Debug.Log($"mousePosition: {mousePosition} itemCount{_menu.GetItemCount()}");
-            }
+            mousePosition = Event.current.mousePosition;
+            GenericMenu _menu = new GenericMenu();
+            _menu.AddItem(new GUIContent("Add Node"), false, () => graphView.GenerateNode("", mousePosition, 1, false, false));
+            _menu.AddItem(new GUIContent("Add Node (2 Choices)"), false, () => graphView.GenerateNode("", mousePosition, 2, false, false));
+            _menu.AddItem(new GUIContent("Add Node (3 Choices)"), false, () => graphView.GenerateNode("", mousePosition, 3, false, false));
+            _menu.AddItem(new GUIContent("Add Node (Start)"), false, () => graphView.GenerateNode("", mousePosition, 1, true, false));
+            _menu.AddItem(new GUIContent("Add Node (End)"), false, () => graphView.GenerateNode("", mousePosition, 1, false, true));
+            _menu.AddItem(new GUIContent("Save"), false, () => save.SaveGraph(storyObj, graphView));
+            _menu.ShowAsContext();
         }
+        
         void CreateGraphView(int _nodeCount)
         {
             graphView = new ExtendedGraphView();
-            graphView.RegisterCallback<MouseDownEvent>(MouseDown);
+            graphView.RegisterCallback<KeyDownEvent>(ShowContextMenu);
             graphView.StretchToParentSize();
             rootVisualElement.Add(graphView);
             if (_nodeCount == 0) 

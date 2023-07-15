@@ -24,22 +24,20 @@ namespace VNCreator
             foreach (BaseNode _node in _graph.nodes.ToList().Cast<BaseNode>().ToList())
             {
                     nodes.Add(
-                    new NodeData
-                    {
-                        guid = _node.nodeData.guid,
-                        characterSpr = _node.nodeData.characterSpr,
-                        characterName = _node.nodeData.characterName,
-                        dialogueText = _node.nodeData.dialogueText,
-                        backgroundSpr = _node.nodeData.backgroundSpr,
-                        startNode = _node.nodeData.startNode,
-                        endNode = _node.nodeData.endNode,
-                        choices = _node.nodeData.choices,
-                        choiceOptions = _node.nodeData.choiceOptions,
-                        nodePosition = _node.GetPosition(),
-                        soundEffect = _node.nodeData.soundEffect,
-                        backgroundMusic = _node.nodeData.backgroundMusic,
-                        characterSprList = _node.nodeData.characterSprList
-                    });
+                    new NodeData(
+                        guid: _node.nodeData.guid,
+                        characterSpr: _node.nodeData.characterSpr,
+                        characterName : _node.nodeData.CharacterName,
+                        dialogueText : _node.nodeData.dialogueText,
+                        backgroundSpr : _node.nodeData.backgroundSpr,
+                        startNode : _node.nodeData.startNode,
+                        endNode : _node.nodeData.endNode,
+                        choices : _node.nodeData.choices,
+                        choiceOptions : _node.nodeData.choiceOptions,
+                        nodePosition : _node.GetPosition(),
+                        soundEffect : _node.nodeData.soundEffect,
+                        backgroundMusic : _node.nodeData.backgroundMusic,
+                        characterSprList : _node.nodeData.characterSprList));
             }
 
             List<Edge> _edges = _graph.edges.ToList();
