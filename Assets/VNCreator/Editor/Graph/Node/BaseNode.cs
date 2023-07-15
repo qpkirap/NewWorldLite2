@@ -16,6 +16,7 @@ using Random = UnityEngine.Random;
 #if UNITY_EDITOR
 using UnityEditor.UIElements;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
 #endif
 
 namespace VNCreator
@@ -47,6 +48,7 @@ namespace VNCreator
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
             
             InitCharSprListViewAsync();
+            InitBgSprListViewAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
             charNameField.value = node.nodeData.CharacterName;
@@ -86,20 +88,82 @@ namespace VNCreator
                     node.nodeData.SetValue("backgroundMusic", (AudioClip)e.newValue);
                 }
             );
+        }
+        
+        private async UniTask InitBgSprListViewAsync()
+        {
+            ListView view = this.Query<ListView>("Bg_Img_List");
+            VisualElement bgSprDisplay = this.Query<VisualElement>("Back_Img");
 
-            VisualElement backSprDisplay = this.Query<VisualElement>("Back_Img");
-            backSprDisplay.style.backgroundImage = node.nodeData.backgroundSpr ? node.nodeData.backgroundSpr.texture : null;
+            var source = node.nodeData.GetValue<List<AssetReference>>("backgroundSprList");
 
-            ObjectField backSprField = this.Query<ObjectField>("Back_Selector").First();
-            backSprField.objectType = typeof(Sprite);
-            backSprField.value = node.nodeData.backgroundSpr;
-            backSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
-                e =>
+            view.itemsSource = source;
+            
+            view.makeItem = () => new ObjectField();
+            view.bindItem = BindItem;
+            view.unbindItem = UnbindItem;
+            view.selectionType = SelectionType.Single;
+            view.showAddRemoveFooter = true;
+
+            view.RefreshItems();
+            UpdatePreviewAsync();
+
+            void UnbindItem(VisualElement e, int index)
+            {
+            }
+
+            async void BindItem(VisualElement e, int index)
+            {
+                var convert = e as ObjectField;
+                
+                convert.objectType = typeof(Sprite);
+
+                convert.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
+                    e =>
+                    {
+                        source[index] = 
+                            GetAssetReferenceFromGUID(e.newValue);
+
+                        UpdatePreviewAsync();
+                    }
+                );
+                
+                var item = node.nodeData.BackgroundSprList[index];
+
+                if (item != null && item.RuntimeKeyIsValid())
                 {
-                    node.nodeData.backgroundSpr = (Sprite)e.newValue;
-                    backSprDisplay.style.backgroundImage = node.nodeData.backgroundSpr ? node.nodeData.backgroundSpr.texture : null;
+                    var adrSprite = new AddressableSprite(item);
+
+                    var sprite = await adrSprite.LoadAsync();
+
+                    convert.value = sprite;
                 }
-            );
+                else convert.value = null;
+            }
+
+            async void UpdatePreviewAsync()
+            {
+                if (node.nodeData.BackgroundSprList != null
+                    && node.nodeData.BackgroundSprList.Any())
+                {
+                    var items = node.nodeData.BackgroundSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
+
+                    if (items.Any())
+                    {
+                        var random = items[Random.Range(0, items.Count)];
+
+                        var adrSprite = new AddressableSprite(random);
+
+                        var sprite = await adrSprite.LoadAsync();
+
+                        bgSprDisplay.style.backgroundImage = sprite.texture;
+                        
+                        return;
+                    }
+                }
+                
+                bgSprDisplay.style.backgroundImage = null;
+            }
         }
 
         private async UniTask InitCharSprListViewAsync()

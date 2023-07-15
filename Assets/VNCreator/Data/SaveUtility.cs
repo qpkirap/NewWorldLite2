@@ -26,7 +26,7 @@ namespace VNCreator
                         guid: _node.nodeData.Guid,
                         characterName : _node.nodeData.CharacterName,
                         dialogueText : _node.nodeData.DialogueText,
-                        backgroundSpr : _node.nodeData.backgroundSpr,
+                        backgroundSprList : _node.nodeData.BackgroundSprList.ToList(),
                         startNode : _node.nodeData.StartNode,
                         endNode : _node.nodeData.EndNode,
                         choices : _node.nodeData.Choices,

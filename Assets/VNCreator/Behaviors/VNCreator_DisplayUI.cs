@@ -79,8 +79,12 @@ namespace VNCreator
             {
                 characterImg.color = new Color(1, 1, 1, 0);
             }
-            if(currentNode.backgroundSpr != null)
-                backgroundImg.sprite = currentNode.backgroundSpr;
+
+            if (currentNode.BackgroundSprList != null)
+            {
+                //Добавить отображение случайного спрайта
+                backgroundImg.sprite = null;
+            }
 
             if (currentNode.Choices <= 1) 
             {

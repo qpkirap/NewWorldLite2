@@ -12,7 +12,6 @@ namespace VNCreator
         private string guid;
         [SerializeField] private string characterName;
         [SerializeField] private string dialogueText;
-        public Sprite backgroundSpr;
         [SerializeField] private bool startNode;
         [SerializeField] private bool endNode;
         [SerializeField] private int choices = 1;
@@ -40,6 +39,7 @@ namespace VNCreator
         
         public IReadOnlyList<string> ChoiceOptions => choiceOptions;
         public IReadOnlyList<AssetReference> CharacterSprList => characterSprList;
+        public IReadOnlyList<AssetReference> BackgroundSprList => backgroundSprList;
 
         public string CharacterName => characterName;
 
@@ -47,7 +47,12 @@ namespace VNCreator
         {
         }
 
-        public NodeData(string guid, string characterName, string dialogueText, Sprite backgroundSpr, bool startNode, bool endNode, int choices, List<string> choiceOptions, Rect nodePosition, AudioClip soundEffect, AudioClip backgroundMusic, List<AssetReference> characterSprList)
+        public NodeData(string guid, string characterName,
+            string dialogueText, bool startNode, bool endNode, int choices, 
+            List<string> choiceOptions,
+            Rect nodePosition, AudioClip soundEffect, AudioClip backgroundMusic, 
+            List<AssetReference> characterSprList,
+            List<AssetReference> backgroundSprList)
         {
 #if UNITY_EDITOR
             if (string.IsNullOrEmpty(guid)) this.guid = GUID.Generate().ToString();      
@@ -55,7 +60,6 @@ namespace VNCreator
             
             this.characterName = characterName;
             this.dialogueText = dialogueText;
-            this.backgroundSpr = backgroundSpr;
             this.startNode = startNode;
             this.endNode = endNode;
             this.choices = choices;
@@ -64,6 +68,7 @@ namespace VNCreator
             this.soundEffect = soundEffect;
             this.backgroundMusic = backgroundMusic;
             this.characterSprList = characterSprList;
+            this.backgroundSprList = backgroundSprList;
         }
     }
 }

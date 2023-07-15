@@ -14,16 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   links: []
   nodes:
-  - guid: 964fc6e1-f59c-48c7-b51d-5a1ac9d31d24
-    characterSpr:
-      m_AssetGUID: e89e94c938bf20549b956865c8ecab8d
-      m_SubObjectName: spr_coon
-      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      m_EditorAssetChanged: 1
-    characterName: 
+  - characterName: 
     dialogueText: 
-    backgroundSpr: {fileID: 0}
     startNode: 1
     endNode: 0
     choices: 1
@@ -34,7 +26,7 @@ MonoBehaviour:
       x: 294
       y: 120
       width: 499
-      height: 370
+      height: 413
     soundEffect: {fileID: 0}
     backgroundMusic: {fileID: 0}
     characterSprList:
@@ -42,6 +34,11 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+    - m_AssetGUID: e89e94c938bf20549b956865c8ecab8d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    backgroundSprList:
     - m_AssetGUID: e89e94c938bf20549b956865c8ecab8d
       m_SubObjectName: 
       m_SubObjectType: 

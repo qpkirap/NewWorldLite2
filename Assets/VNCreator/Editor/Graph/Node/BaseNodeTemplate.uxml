@@ -5,11 +5,12 @@
             <ui:VisualElement name="Char_Img" class="char_img">
                 <uie:ObjectField name="Icon_Selection" allow-scene-objects="false" class="char_selector" />
             </ui:VisualElement>
+            <ui:ListView focusable="true" name="Char_Img_List" />
             <ui:Label text="Background sprite:" class="min_header" />
             <ui:VisualElement name="Back_Img" class="back_img">
                 <uie:ObjectField name="Back_Selector" allow-scene-objects="false" class="char_selector" />
             </ui:VisualElement>
-            <ui:ListView focusable="true" name="Char_Img_List" />
+            <ui:ListView focusable="true" name="Bg_Img_List" />
         </ui:VisualElement>
         <ui:VisualElement>
             <ui:Label text="Character Name" class="min_header" />
