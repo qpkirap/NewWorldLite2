@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.AddressableAssets;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 #if UNITY_EDITOR
 using UnityEditor.UIElements;
 using UnityEngine.AddressableAssets;
@@ -44,9 +45,8 @@ namespace VNCreator
             tree.CloneTree(this);
 
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
-
-            UpdateCharacterSprAsync();
-            InitListViewAsync();
+            
+            InitCharSprListViewAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
             charNameField.value = node.nodeData.CharacterName;
@@ -54,37 +54,36 @@ namespace VNCreator
                 e =>
                 {
                     node.nodeData.SetValue("characterName", charNameField.value);
-                    //node.nodeData.characterName = charNameField.value;
                 }
             );
 
             TextField dialogueField = this.Query<TextField>("Dialogue_Field");
             dialogueField.multiline = true;
-            dialogueField.value = node.nodeData.dialogueText;
+            dialogueField.value = node.nodeData.DialogueText;
             dialogueField.RegisterValueChangedCallback(
                 e =>
                 {
-                    node.nodeData.dialogueText = dialogueField.value;
+                    node.nodeData.SetValue("dialogueText", dialogueField.value);
                 }
             );
 
             ObjectField sfxField = this.Query<ObjectField>("Sound_Field").First();
             sfxField.objectType = typeof(AudioClip);
-            sfxField.value = node.nodeData.soundEffect;
+            sfxField.value = node.nodeData.SoundEffect;
             sfxField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>
                 {
-                    node.nodeData.soundEffect = (AudioClip)e.newValue;
+                    node.nodeData.SetValue("soundEffect", (AudioClip)e.newValue);
                 }
             );
 
             ObjectField musicField = this.Query<ObjectField>("Music_Field").First();
             musicField.objectType = typeof(AudioClip);
-            musicField.value = node.nodeData.soundEffect;
+            musicField.value = node.nodeData.BackgroundMusic;
             musicField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>
                 {
-                    node.nodeData.backgroundMusic = (AudioClip)e.newValue;
+                    node.nodeData.SetValue("backgroundMusic", (AudioClip)e.newValue);
                 }
             );
 
@@ -103,11 +102,14 @@ namespace VNCreator
             );
         }
 
-        private async UniTask InitListViewAsync()
+        private async UniTask InitCharSprListViewAsync()
         {
             ListView view = this.Query<ListView>("Char_Img_List");
-            
-            view.itemsSource = node.nodeData.characterSprList;
+            VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
+
+            var source = node.nodeData.GetValue<List<AssetReference>>("characterSprList");
+
+            view.itemsSource = source;
             
             view.makeItem = () => new ObjectField();
             view.bindItem = BindItem;
@@ -116,6 +118,7 @@ namespace VNCreator
             view.showAddRemoveFooter = true;
 
             view.RefreshItems();
+            UpdatePreviewAsync();
 
             void UnbindItem(VisualElement e, int index)
             {
@@ -130,14 +133,14 @@ namespace VNCreator
                 convert.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                     e =>
                     {
-                        node.nodeData.characterSprList[index] = 
+                        source[index] = 
                             GetAssetReferenceFromGUID(e.newValue);
 
-                        Debug.Log($"convert.RegisterCallback {e.newValue}");
+                        UpdatePreviewAsync();
                     }
                 );
                 
-                var item = node.nodeData.characterSprList[index];
+                var item = node.nodeData.CharacterSprList[index];
 
                 if (item != null && item.RuntimeKeyIsValid())
                 {
@@ -149,41 +152,29 @@ namespace VNCreator
                 }
                 else convert.value = null;
             }
-        }
 
-        private async UniTask UpdateCharacterSprAsync()
-        {
-            VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
-
-            ObjectField charSprField = this.Query<ObjectField>("Icon_Selection").First();
-            charSprField.objectType = typeof(Sprite);
-
-            charSprField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
-                ChangeEvent
-            );
-            
-            await UpdateFieldBgImage();
-            
-            async void ChangeEvent(ChangeEvent<Object> e)
+            async void UpdatePreviewAsync()
             {
-                node.nodeData.characterSpr.SetEditorAsset(e.newValue);
-
-                await UpdateFieldBgImage();
-            }
-
-            async UniTask UpdateFieldBgImage()
-            {
-                if (node.nodeData.characterSpr != null 
-                    && node.nodeData.CharacterSpr is { RuntimeKeyIsValid: true })
+                if (node.nodeData.CharacterSprList != null
+                    && node.nodeData.CharacterSprList.Any())
                 {
-                    var sprite = await node.nodeData.CharacterSpr.LoadAsync();
+                    var items = node.nodeData.CharacterSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
 
-                    charSprDisplay.style.backgroundImage = sprite.texture;
+                    if (items.Any())
+                    {
+                        var random = items[Random.Range(0, items.Count)];
+
+                        var adrSprite = new AddressableSprite(random);
+
+                        var sprite = await adrSprite.LoadAsync();
+
+                        charSprDisplay.style.backgroundImage = sprite.texture;
+                        
+                        return;
+                    }
                 }
-                else
-                {
-                    charSprDisplay.style.backgroundImage = null;
-                }
+                
+                charSprDisplay.style.backgroundImage = null;
             }
         }
 

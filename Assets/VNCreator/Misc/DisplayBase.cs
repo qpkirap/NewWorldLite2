@@ -19,7 +19,7 @@ namespace VNCreator
             if (PlayerPrefs.GetString(GameSaveManager.currentLoadName) == string.Empty)
             {
                 currentNode = story.GetFirstNode();
-                loadList.Add(currentNode.guid);
+                loadList.Add(currentNode.Guid);
             }
             else
             {
@@ -28,7 +28,7 @@ namespace VNCreator
                 {
                     currentNode = story.GetFirstNode();
                     loadList = new List<string>();
-                    loadList.Add(currentNode.guid);
+                    loadList.Add(currentNode.Guid);
                 }
                 else
                 {
@@ -41,9 +41,9 @@ namespace VNCreator
         {
             if (!lastNode) 
             {
-                currentNode = story.GetNextNode(currentNode.guid, _choiceId);
-                lastNode = currentNode.endNode;
-                loadList.Add(currentNode.guid);
+                currentNode = story.GetNextNode(currentNode.Guid, _choiceId);
+                lastNode = currentNode.EndNode;
+                loadList.Add(currentNode.Guid);
             }
         }
 
@@ -51,7 +51,7 @@ namespace VNCreator
         {
             loadList.RemoveAt(loadList.Count - 1);
             currentNode = story.GetCurrentNode(loadList[loadList.Count - 1]);
-            lastNode = currentNode.endNode;
+            lastNode = currentNode.EndNode;
         }
 
         protected void Save()

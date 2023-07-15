@@ -28,7 +28,7 @@ namespace VNCreator
         {
             for (int i = 0; i < nodes.Count; i++)
             {
-                if (nodes[i].startNode)
+                if (nodes[i].StartNode)
                 {
                     return nodes[i];
                 }
@@ -41,7 +41,7 @@ namespace VNCreator
         {
             for (int i = 0; i < nodes.Count; i++)
             {
-                if (nodes[i].guid == _currentGuid)
+                if (nodes[i].Guid == _currentGuid)
                     return nodes[i];
             }
 

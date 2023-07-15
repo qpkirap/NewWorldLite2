@@ -44,10 +44,10 @@ namespace VNCreator.Editors.Graph
 
             _node.title = _nodeName;
             _node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (_mousePos * (1/scale)), Vector2.one));
-            _node.nodeData.startNode = _startNode;
-            _node.nodeData.endNode = _endNode;
-            _node.nodeData.choices = choiceAmount;
-            _node.nodeData.choiceOptions = _choices;
+            _node.nodeData.SetValue("startNode", _startNode);
+            _node.nodeData.SetValue("endNode", _endNode);
+            _node.nodeData.SetValue("choices", choiceAmount);
+            _node.nodeData.SetValue("choiceOptions", _choices);
 
             if (!_startNode)
             {
@@ -65,16 +65,17 @@ namespace VNCreator.Editors.Graph
                         Port _outputPort = CreatePort(_node, Direction.Output, Port.Capacity.Single);
                         _outputPort.portName = "Choice " + (i + 1);
 
-                        //_node.nodeData.choiceOptions.Add(_node.nodeData.choiceOptions[i]);
-
-                        string _value = _data.choiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.nodeData.choiceOptions[i];
+                        string _value = _data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.nodeData.ChoiceOptions[i];
                         int _idx = i;
 
                         TextField _field = new TextField { value = _value };
                         _field.RegisterValueChangedCallback(
                             e =>
                             {
-                                _node.nodeData.choiceOptions[_idx] = _field.value;
+                                var copyList = _node.nodeData.ChoiceOptions.ToList();
+                                copyList[_idx] = _field.value;
+                                
+                                _node.nodeData.SetValue("choiceOptions", copyList);
                             }
                             );
 

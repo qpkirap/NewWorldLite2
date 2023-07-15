@@ -9,33 +9,50 @@ namespace VNCreator
     [Serializable]
     public class NodeData
     {
-        public string guid;
-        public AssetReference characterSpr;
+        private string guid;
         [SerializeField] private string characterName;
-        public string dialogueText;
+        [SerializeField] private string dialogueText;
         public Sprite backgroundSpr;
-        public bool startNode;
-        public bool endNode;
-        public int choices = 1;
-        public List<string> choiceOptions;
-        public Rect nodePosition;
-        public AudioClip soundEffect;
-        public AudioClip backgroundMusic;
-        public List<AssetReference> characterSprList;
+        [SerializeField] private bool startNode;
+        [SerializeField] private bool endNode;
+        [SerializeField] private int choices = 1;
+        [SerializeField] List<string> choiceOptions;
+        [SerializeField] private Rect nodePosition;
+        [SerializeField] private AudioClip soundEffect;
+        [SerializeField] private AudioClip backgroundMusic;
+        [SerializeField] List<AssetReference> characterSprList;
+        [SerializeField] List<AssetReference> backgroundSprList;
+
+        public string Guid => string.IsNullOrEmpty(guid) ? guid = GUID.Generate().ToString() : guid;
+        public string DialogueText => dialogueText;
+
+        public bool StartNode => startNode;
+
+        public bool EndNode => endNode;
+
+        public int Choices => choices;
+
+        public Rect NodePosition => nodePosition;
+
+        public AudioClip SoundEffect => soundEffect;
+
+        public AudioClip BackgroundMusic => backgroundMusic;
+        
+        public IReadOnlyList<string> ChoiceOptions => choiceOptions;
+        public IReadOnlyList<AssetReference> CharacterSprList => characterSprList;
 
         public string CharacterName => characterName;
-        public AddressableSprite CharacterSpr => new(characterSpr);
 
         public NodeData()
         {
-            guid = Guid.NewGuid().ToString();
         }
 
-        public NodeData(string guid, AssetReference characterSpr, string characterName, string dialogueText, Sprite backgroundSpr, bool startNode, bool endNode, int choices, List<string> choiceOptions, Rect nodePosition, AudioClip soundEffect, AudioClip backgroundMusic, List<AssetReference> characterSprList)
+        public NodeData(string guid, string characterName, string dialogueText, Sprite backgroundSpr, bool startNode, bool endNode, int choices, List<string> choiceOptions, Rect nodePosition, AudioClip soundEffect, AudioClip backgroundMusic, List<AssetReference> characterSprList)
         {
-            if (string.IsNullOrEmpty(guid)) this.guid = GUID.Generate().ToString();
+#if UNITY_EDITOR
+            if (string.IsNullOrEmpty(guid)) this.guid = GUID.Generate().ToString();      
+#endif
             
-            this.characterSpr = characterSpr;
             this.characterName = characterName;
             this.dialogueText = dialogueText;
             this.backgroundSpr = backgroundSpr;

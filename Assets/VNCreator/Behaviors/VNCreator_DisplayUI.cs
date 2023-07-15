@@ -70,7 +70,7 @@ namespace VNCreator
         IEnumerator DisplayCurrentNode()
         {
             characterNameTxt.text = currentNode.CharacterName;
-            if (currentNode.characterSpr != null)
+            if (currentNode.CharacterSprList != null)
             {
                 //characterImg.sprite = currentNode.CharacterSpr.LoadAsync().ToCoroutine();
                 characterImg.color = Color.white;
@@ -82,7 +82,7 @@ namespace VNCreator
             if(currentNode.backgroundSpr != null)
                 backgroundImg.sprite = currentNode.backgroundSpr;
 
-            if (currentNode.choices <= 1) 
+            if (currentNode.Choices <= 1) 
             {
                 nextBtn.gameObject.SetActive(true);
 
@@ -97,15 +97,15 @@ namespace VNCreator
                 nextBtn.gameObject.SetActive(false);
 
                 choiceBtn1.gameObject.SetActive(true);
-                choiceBtn1.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[0];
+                choiceBtn1.transform.GetChild(0).GetComponent<Text>().text = currentNode.ChoiceOptions[0];
 
                 choiceBtn2.gameObject.SetActive(true);
-                choiceBtn2.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[1];
+                choiceBtn2.transform.GetChild(0).GetComponent<Text>().text = currentNode.ChoiceOptions[1];
 
-                if (currentNode.choices == 3)
+                if (currentNode.Choices == 3)
                 {
                     choiceBtn3.gameObject.SetActive(true);
-                    choiceBtn3.transform.GetChild(0).GetComponent<Text>().text = currentNode.choiceOptions[2];
+                    choiceBtn3.transform.GetChild(0).GetComponent<Text>().text = currentNode.ChoiceOptions[2];
                 }
                 else
                 {
@@ -113,19 +113,19 @@ namespace VNCreator
                 }
             }
 
-            if (currentNode.backgroundMusic != null)
-                VNCreator_MusicSource.instance.Play(currentNode.backgroundMusic);
-            if (currentNode.soundEffect != null)
-                VNCreator_SfxSource.instance.Play(currentNode.soundEffect);
+            if (currentNode.BackgroundMusic != null)
+                VNCreator_MusicSource.instance.Play(currentNode.BackgroundMusic);
+            if (currentNode.SoundEffect != null)
+                VNCreator_SfxSource.instance.Play(currentNode.SoundEffect);
 
             dialogueTxt.text = string.Empty;
             if (GameOptions.isInstantText)
             {
-                dialogueTxt.text = currentNode.dialogueText;
+                dialogueTxt.text = currentNode.DialogueText;
             }
             else
             {
-                char[] _chars = currentNode.dialogueText.ToCharArray();
+                char[] _chars = currentNode.DialogueText.ToCharArray();
                 string fullString = string.Empty;
                 for (int i = 0; i < _chars.Length; i++)
                 {
