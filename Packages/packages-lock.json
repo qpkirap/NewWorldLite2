@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.browar.editor-toolbox": {
+      "version": "https://github.com/arimger/Unity-Editor-Toolbox.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      },
+      "hash": "b51864979068d562ec82ad62033d3097ed6f72ec"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.3",
       "depth": 1,

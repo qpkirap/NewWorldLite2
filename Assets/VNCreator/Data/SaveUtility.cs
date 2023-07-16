@@ -26,15 +26,15 @@ namespace VNCreator
                         guid: _node.nodeData.Guid,
                         characterName : _node.nodeData.CharacterName,
                         dialogueText : _node.nodeData.DialogueText,
-                        backgroundSprList : _node.nodeData.BackgroundSprList.ToList(),
+                        backgroundSprList : _node.nodeData.BackgroundSprList?.ToList(),
                         startNode : _node.nodeData.StartNode,
                         endNode : _node.nodeData.EndNode,
                         choices : _node.nodeData.Choices,
-                        choiceOptions : _node.nodeData.ChoiceOptions.ToList(),
+                        choiceOptions : _node.nodeData.ChoiceOptions?.ToList(),
                         nodePosition : _node.GetPosition(),
                         soundEffect : _node.nodeData.SoundEffect,
                         backgroundMusic : _node.nodeData.BackgroundMusic,
-                        characterSprList : _node.nodeData.CharacterSprList.ToList()));
+                        characterSprList : _node.nodeData.CharacterSprList?.ToList()));
             }
 
             List<Edge> _edges = _graph.edges.ToList();
