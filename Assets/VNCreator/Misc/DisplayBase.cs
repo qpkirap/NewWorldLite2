@@ -9,7 +9,7 @@ namespace VNCreator
     {
         public StoryObject story;
 
-        protected NodeData currentNode;
+        protected DialogueNodeData CurrentDialogueNode;
         protected bool lastNode;
 
         protected List<string> loadList = new List<string>();
@@ -18,21 +18,21 @@ namespace VNCreator
         {
             if (PlayerPrefs.GetString(GameSaveManager.currentLoadName) == string.Empty)
             {
-                currentNode = story.GetFirstNode();
-                loadList.Add(currentNode.Guid);
+                CurrentDialogueNode = story.GetFirstNode();
+                loadList.Add(CurrentDialogueNode.Guid);
             }
             else
             {
                 loadList = GameSaveManager.Load();
                 if(loadList == null || loadList.Count == 0)
                 {
-                    currentNode = story.GetFirstNode();
+                    CurrentDialogueNode = story.GetFirstNode();
                     loadList = new List<string>();
-                    loadList.Add(currentNode.Guid);
+                    loadList.Add(CurrentDialogueNode.Guid);
                 }
                 else
                 {
-                    currentNode = story.GetCurrentNode(loadList[loadList.Count - 1]);
+                    CurrentDialogueNode = story.GetCurrentNode(loadList[loadList.Count - 1]);
                 }
             }
         }
@@ -41,17 +41,17 @@ namespace VNCreator
         {
             if (!lastNode) 
             {
-                currentNode = story.GetNextNode(currentNode.Guid, _choiceId);
-                lastNode = currentNode.EndNode;
-                loadList.Add(currentNode.Guid);
+                CurrentDialogueNode = story.GetNextNode(CurrentDialogueNode.Guid, _choiceId);
+                lastNode = CurrentDialogueNode.EndNode;
+                loadList.Add(CurrentDialogueNode.Guid);
             }
         }
 
         protected virtual void Previous()
         {
             loadList.RemoveAt(loadList.Count - 1);
-            currentNode = story.GetCurrentNode(loadList[loadList.Count - 1]);
-            lastNode = currentNode.EndNode;
+            CurrentDialogueNode = story.GetCurrentNode(loadList[loadList.Count - 1]);
+            lastNode = CurrentDialogueNode.EndNode;
         }
 
         protected void Save()

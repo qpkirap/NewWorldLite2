@@ -28,11 +28,11 @@ namespace VNCreator.Editors
             
             mousePosition = Event.current.mousePosition;
             GenericMenu _menu = new GenericMenu();
-            _menu.AddItem(new GUIContent("Add Node"), false, () => graphView.GenerateNode("", mousePosition, 1, false, false));
-            _menu.AddItem(new GUIContent("Add Node (2 Choices)"), false, () => graphView.GenerateNode("", mousePosition, 2, false, false));
-            _menu.AddItem(new GUIContent("Add Node (3 Choices)"), false, () => graphView.GenerateNode("", mousePosition, 3, false, false));
-            _menu.AddItem(new GUIContent("Add Node (Start)"), false, () => graphView.GenerateNode("", mousePosition, 1, true, false));
-            _menu.AddItem(new GUIContent("Add Node (End)"), false, () => graphView.GenerateNode("", mousePosition, 1, false, true));
+            _menu.AddItem(new GUIContent("Add Node"), false, () => graphView.GenerateDialogueNode("", mousePosition, 1, false, false));
+            _menu.AddItem(new GUIContent("Add Node (2 Choices)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 2, false, false));
+            _menu.AddItem(new GUIContent("Add Node (3 Choices)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 3, false, false));
+            _menu.AddItem(new GUIContent("Add Node (Start)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 1, true, false));
+            _menu.AddItem(new GUIContent("Add Node (End)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 1, false, true));
             _menu.AddItem(new GUIContent("Save"), false, () => save.SaveGraph(storyObj, graphView));
             _menu.ShowAsContext();
         }

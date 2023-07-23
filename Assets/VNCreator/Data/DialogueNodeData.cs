@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 namespace VNCreator
 {
     [Serializable]
-    public class NodeData
+    public class DialogueNodeData
     {
         private string guid;
         [SerializeField] private string characterName;
@@ -43,14 +43,21 @@ namespace VNCreator
 
         public string CharacterName => characterName;
 
-        public NodeData()
+        public DialogueNodeData()
         {
         }
 
-        public NodeData(string guid, string characterName,
-            string dialogueText, bool startNode, bool endNode, int choices, 
+        public DialogueNodeData(
+            string guid,
+            string characterName,
+            string dialogueText,
+            bool startNode, 
+            bool endNode, 
+            int choices, 
             List<string> choiceOptions,
-            Rect nodePosition, AudioClip soundEffect, AudioClip backgroundMusic, 
+            Rect nodePosition, 
+            AudioClip soundEffect,
+            AudioClip backgroundMusic, 
             List<AssetReference> characterSprList,
             List<AssetReference> backgroundSprList)
         {

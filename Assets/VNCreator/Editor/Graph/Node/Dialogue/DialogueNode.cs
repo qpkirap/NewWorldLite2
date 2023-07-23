@@ -22,70 +22,72 @@ using UnityEngine.Localization;
 namespace VNCreator
 {
 #if UNITY_EDITOR
-    public class BaseNode : Node
+    public class DialogueNode : BaseNode
     {
-        public NodeData nodeData;
+        public DialogueNodeData DialogueNodeData;
         public NodeViewer visuals;
+        
+        public override NodeType NodeType => NodeType.Dialogue;
 
-        public BaseNode(NodeData _data)
+        public DialogueNode(DialogueNodeData _data)
         {
-            nodeData = _data != null ? _data : new NodeData();
+            DialogueNodeData = _data != null ? _data : new DialogueNodeData();
             visuals = new NodeViewer(this);
         }
     }
 
     public class NodeViewer : VisualElement
     {
-        BaseNode node;
+        DialogueNode node;
 
-        public NodeViewer(BaseNode _node)
+        public NodeViewer(DialogueNode _node)
         {
             node = _node;
 
-            VisualTreeAsset tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/VNCreator/Editor/Graph/Node/BaseNodeTemplate.uxml");
+            VisualTreeAsset tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(DialogueNodePaths.Tree);
             tree.CloneTree(this);
 
-            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/VNCreator/Editor/Graph/Node/BaseNodeStyle.uss"));
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(DialogueNodePaths.StyleSheets));
             
             InitCharSprListViewAsync();
             InitBgSprListViewAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
-            charNameField.value = node.nodeData.CharacterName;
+            charNameField.value = node.DialogueNodeData.CharacterName;
             charNameField.RegisterValueChangedCallback(
                 e =>
                 {
-                    node.nodeData.SetValue("characterName", charNameField.value);
+                    node.DialogueNodeData.SetValue("characterName", charNameField.value);
                 }
             );
 
             TextField dialogueField = this.Query<TextField>("Dialogue_Field");
             dialogueField.multiline = true;
-            dialogueField.value = node.nodeData.DialogueText;
+            dialogueField.value = node.DialogueNodeData.DialogueText;
             dialogueField.RegisterValueChangedCallback(
                 e =>
                 {
-                    node.nodeData.SetValue("dialogueText", dialogueField.value);
+                    node.DialogueNodeData.SetValue("dialogueText", dialogueField.value);
                 }
             );
 
             ObjectField sfxField = this.Query<ObjectField>("Sound_Field").First();
             sfxField.objectType = typeof(AudioClip);
-            sfxField.value = node.nodeData.SoundEffect;
+            sfxField.value = node.DialogueNodeData.SoundEffect;
             sfxField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>
                 {
-                    node.nodeData.SetValue("soundEffect", (AudioClip)e.newValue);
+                    node.DialogueNodeData.SetValue("soundEffect", (AudioClip)e.newValue);
                 }
             );
 
             ObjectField musicField = this.Query<ObjectField>("Music_Field").First();
             musicField.objectType = typeof(AudioClip);
-            musicField.value = node.nodeData.BackgroundMusic;
+            musicField.value = node.DialogueNodeData.BackgroundMusic;
             musicField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>
                 {
-                    node.nodeData.SetValue("backgroundMusic", (AudioClip)e.newValue);
+                    node.DialogueNodeData.SetValue("backgroundMusic", (AudioClip)e.newValue);
                 }
             );
         }
@@ -95,7 +97,7 @@ namespace VNCreator
             ListView view = this.Query<ListView>("Bg_Img_List");
             VisualElement bgSprDisplay = this.Query<VisualElement>("Back_Img");
 
-            var source = node.nodeData.GetValue<List<AssetReference>>("backgroundSprList");
+            var source = node.DialogueNodeData.GetValue<List<AssetReference>>("backgroundSprList");
 
             view.itemsSource = source;
             
@@ -128,7 +130,7 @@ namespace VNCreator
                     }
                 );
                 
-                var item = node.nodeData.BackgroundSprList[index];
+                var item = node.DialogueNodeData.BackgroundSprList[index];
 
                 if (item != null && item.RuntimeKeyIsValid())
                 {
@@ -143,10 +145,10 @@ namespace VNCreator
 
             async void UpdatePreviewAsync()
             {
-                if (node.nodeData.BackgroundSprList != null
-                    && node.nodeData.BackgroundSprList.Any())
+                if (node.DialogueNodeData.BackgroundSprList != null
+                    && node.DialogueNodeData.BackgroundSprList.Any())
                 {
-                    var items = node.nodeData.BackgroundSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
+                    var items = node.DialogueNodeData.BackgroundSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
 
                     if (items.Any())
                     {
@@ -171,7 +173,7 @@ namespace VNCreator
             ListView view = this.Query<ListView>("Char_Img_List");
             VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
 
-            var source = node.nodeData.GetValue<List<AssetReference>>("characterSprList");
+            var source = node.DialogueNodeData.GetValue<List<AssetReference>>("characterSprList");
 
             view.itemsSource = source;
             
@@ -204,7 +206,7 @@ namespace VNCreator
                     }
                 );
                 
-                var item = node.nodeData.CharacterSprList[index];
+                var item = node.DialogueNodeData.CharacterSprList[index];
 
                 if (item != null && item.RuntimeKeyIsValid())
                 {
@@ -219,10 +221,10 @@ namespace VNCreator
 
             async void UpdatePreviewAsync()
             {
-                if (node.nodeData.CharacterSprList != null
-                    && node.nodeData.CharacterSprList.Any())
+                if (node.DialogueNodeData.CharacterSprList != null
+                    && node.DialogueNodeData.CharacterSprList.Any())
                 {
-                    var items = node.nodeData.CharacterSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
+                    var items = node.DialogueNodeData.CharacterSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
 
                     if (items.Any())
                     {

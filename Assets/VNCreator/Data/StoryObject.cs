@@ -4,12 +4,12 @@ using UnityEngine;
 namespace VNCreator
 {
     [CreateAssetMenu(fileName = "New Story", menuName = "New Story")]
-    public class StoryObject : ScriptableObject
+    public class StoryObject : ScriptableEntity
     {
         public List<Link> links;
-        public List<NodeData> nodes;
+        public List<DialogueNodeData> nodes;
 
-        public void SetLists(List<NodeData> _nodes, List<Link> _links)
+        public void SetLists(List<DialogueNodeData> _nodes, List<Link> _links)
         {
             links = new List<Link>();
             for (int i = 0; i < _links.Count; i++)
@@ -17,14 +17,14 @@ namespace VNCreator
                 links.Add(_links[i]);
             }
 
-            nodes = new List<NodeData>();
+            nodes = new List<DialogueNodeData>();
             for (int i = 0; i < _nodes.Count; i++)
             {
                 nodes.Add(_nodes[i]);
             }
         }
 
-        public NodeData GetFirstNode()
+        public DialogueNodeData GetFirstNode()
         {
             for (int i = 0; i < nodes.Count; i++)
             {
@@ -37,7 +37,7 @@ namespace VNCreator
             Debug.LogError("You need a start node");
             return null;
         }
-        public NodeData GetCurrentNode(string _currentGuid)
+        public DialogueNodeData GetCurrentNode(string _currentGuid)
         {
             for (int i = 0; i < nodes.Count; i++)
             {
@@ -49,7 +49,7 @@ namespace VNCreator
         }
 
         List<Link> _tempLinks = new List<Link>();
-        public NodeData GetNextNode(string _currentGuid, int _choiceId)
+        public DialogueNodeData GetNextNode(string _currentGuid, int _choiceId)
         {
             _tempLinks = new List<Link>();
 

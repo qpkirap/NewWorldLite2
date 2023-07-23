@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace VNCreator
 {
@@ -27,7 +26,7 @@ namespace VNCreator
         
     }
     
-    public abstract class Command : ScriptableObject
+    public abstract class Command : Component
     {
         public abstract Type GetMyType();
         public abstract void Execute();

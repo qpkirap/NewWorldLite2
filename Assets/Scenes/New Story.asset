@@ -12,8 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d55d090c78b6240aa6dccd6042a022, type: 3}
   m_Name: New Story
   m_EditorClassIdentifier: 
-  links: []
+  links:
+  - guid: c50cab871faaa4c6b913b1ab1f707675
+    targetGuid: 932ef4053570243979937b687e25d374
+    portId: 0
   nodes:
+  - characterName: 
+    dialogueText: 
+    startNode: 0
+    endNode: 0
+    choices: 1
+    choiceOptions:
+    - 
+    nodePosition:
+      serializedVersion: 2
+      x: 982
+      y: 41
+      width: 499
+      height: 346
+    soundEffect: {fileID: 0}
+    backgroundMusic: {fileID: 0}
+    characterSprList: []
+    backgroundSprList: []
   - characterName: 
     dialogueText: 
     startNode: 1
@@ -24,9 +44,9 @@ MonoBehaviour:
     nodePosition:
       serializedVersion: 2
       x: 294
-      y: 120
+      y: 121
       width: 499
-      height: 413
+      height: 412
     soundEffect: {fileID: 0}
     backgroundMusic: {fileID: 0}
     characterSprList:
@@ -43,3 +63,20 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - characterName: 
+    dialogueText: 
+    startNode: 0
+    endNode: 0
+    choices: 1
+    choiceOptions:
+    - 
+    nodePosition:
+      serializedVersion: 2
+      x: 483
+      y: 609.5
+      width: 499
+      height: 346
+    soundEffect: {fileID: 0}
+    backgroundMusic: {fileID: 0}
+    characterSprList: []
+    backgroundSprList: []
