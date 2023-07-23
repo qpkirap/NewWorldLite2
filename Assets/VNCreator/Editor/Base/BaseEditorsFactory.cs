@@ -33,14 +33,11 @@ namespace VNCreator
             //.ThenBy(x => x.menuOrder);
         }
         
-        public List<ICustomEditor> GetOrCreateEditors<T>(
-            IEnumerable<T> entities,
-            bool orderedByAttribute = true,
-            string cacheName = "")
+        public List<ICustomEditor> GetOrCreateEditors<T>(IEnumerable<T> entities, bool orderedByAttribute = true)
         {
             var result = entities.Select(entity =>
             {
-                return GetOrCreateEditor(entity, cacheName);
+                return GetOrCreateEditor(entity);
             });
 
             if (orderedByAttribute)
@@ -53,7 +50,7 @@ namespace VNCreator
             return result.ToList();
         }
         
-        public ICustomEditor GetOrCreateEditor(object entity, string cacheName = "")
+        public ICustomEditor GetOrCreateEditor(object entity)
         {
             var entityType = entity.GetType();
 
@@ -78,7 +75,56 @@ namespace VNCreator
 
             return editor;
         }
-        
+
+        public TEditor GetOrCreateEditor<TEditor>(object entity) where TEditor : ICustomEditor
+        {
+            return (TEditor)GetOrCreateEditor(entity);
+        }
+
+        public ICustomEditor CreateEditor(Type entityType)
+        {
+            // get or create editor
+            if (!TryCreateEditor(entityType, out var editor))
+            {
+                Debug.LogError($"Не найден редактор для компонента: {entityType.Name}");
+
+                return default;
+            }
+
+            // init editor
+            entityEditorCache.TryGetValue(entityType.Name, out var editorData);
+
+            switch (editor)
+            {
+                case BaseEditor entityEditor:
+                    entityEditor.SetEditorData(editorData);
+                    break;
+            }
+
+            return editor;
+        }
+
+        public Collection<EditorData> GetDataCollection(params object[] filters)
+        {
+            var dataList = GetEntityDataList(entityEditorCache, filters);
+
+            return new Collection<EditorData>(dataList, dataList.Select(x => x.dataType.Name));
+        }
+
+        public Type GetEditorType(Type entityType)
+        {
+            return editorAttributeCache.TryGetValue(entityType.Name, out var editorAttr)
+                ? editorAttr.editorType
+                : null;
+        }
+
+        public BaseEditorAttribute GetEditorAttribute(Type entityType)
+        {
+            return editorAttributeCache.TryGetValue(entityType.Name, out var editorAttr)
+                ? editorAttr
+                : null;
+        }
+
         private bool TryGetEditor(object entity, out ICustomEditor editor)
         {
             var data = editors.FirstOrDefault(x => ReferenceEquals(x.entity, entity));

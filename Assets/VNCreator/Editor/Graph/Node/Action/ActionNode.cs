@@ -20,10 +20,13 @@ namespace VNCreator
 
     public class ActionNodeViewer : VisualElement
     {
+        private IEditorsFactory EditorsFactory => EditorCache.CommandComponentsEditorsFactory;
         private ActionNode node;
         
         public ActionNodeViewer(ActionNode node)
         {
+            EditorCache.Init();
+
             this.node = node;
 
             var tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(ActionNodePaths.Tree);

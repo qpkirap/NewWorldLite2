@@ -6,7 +6,7 @@ namespace VNCreator
 
         public static void Init()
         {
-            
+            CommandComponentsEditorsFactory = new();
         }
     }
 }
