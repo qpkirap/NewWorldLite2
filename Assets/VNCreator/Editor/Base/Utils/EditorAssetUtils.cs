@@ -52,6 +52,27 @@ namespace VNCreator
             }
         }
         
+        private static string[] CreateFilterPath(string filterPath)
+        {
+            return string.IsNullOrEmpty(filterPath) ? null : new string[] { filterPath };
+        }
+        
+        public static IEnumerable<T> LoadAssets<T>(string type = "prefab", string filterPath = null)
+            where T : Object
+        {
+            return AssetDatabase
+                .FindAssets($"t:{type}", CreateFilterPath(filterPath))
+                .Select(x => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(x)))
+                .Where(x => x != null);
+        }
+        
+        public static T LoadAsset<T>(string assetName, string type = "prefab", string filterPath = null)
+            where T : Object
+        {
+            return LoadAssets<T>(type, filterPath)
+                .FirstOrDefault(x => x.name == assetName);
+        }
+        
         public static T LoadAsset<T>(Action onError = null, bool quiet = true) where T : Object
         {
             return LoadAsset(typeof(T), onError, quiet) as T;
@@ -71,6 +92,18 @@ namespace VNCreator
             var fileName = $"{namePrefix}_{data.Id}";
 
             return CreateAssetPath(folderPath, fileName);
+        }
+        
+        public static Object GetFolderAsset(string assetPath)
+        {
+            var folderPath = GetFolderPath(assetPath);
+            return AssetDatabase.LoadAssetAtPath<Object>(folderPath);
+        }
+        
+        public static string GetFolderPath(string assetPath)
+        {
+            var folderPath = new FileInfo(assetPath).Directory.FullName;
+            return folderPath.Replace("\\", "/").Replace(Application.dataPath, "Assets");
         }
         
         public static string CreateAssetPath(string folderPath, string name, string ext = "asset")

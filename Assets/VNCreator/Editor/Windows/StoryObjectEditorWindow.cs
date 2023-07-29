@@ -7,7 +7,7 @@ using VNCreator.Editors.Graph;
 namespace VNCreator.Editors
 {
 #if UNITY_EDITOR
-    public class StoryObjectEditorWindow : EditorWindow
+    public class StoryObjectEditorWindow : BaseConfigEditor<StoryObject>
     {
         private static CommandDataEditor commandDataEditor;
         
@@ -22,13 +22,14 @@ namespace VNCreator.Editors
         {
             commandDataEditor ??= new();
             commandDataEditor.Init("CommandData", _storyObj);
+
+            var window = CreateWindow<StoryObjectEditorWindow>();
+
             //commandDataEditor.SetSubEntityState(true);
-            
-            StoryObjectEditorWindow window = GetWindow<StoryObjectEditorWindow>("Story");
+
             window.storyObj = _storyObj;
             window.CreateGraphView(_storyObj.nodes == null ? 0 : 1);
-            window.minSize = new Vector2(200, 100);
-            
+
             CheckActionCommandData(_storyObj);
         }
 
@@ -56,7 +57,9 @@ namespace VNCreator.Editors
             graphView = new ExtendedGraphView();
             graphView.RegisterCallback<KeyDownEvent>(ShowContextMenu);
             graphView.StretchToParentSize();
-            rootVisualElement.Add(graphView);
+            
+            Window.rootVisualElement.Add(graphView);
+          
             if (_nodeCount == 0) 
             {
                 //graphView.GenerateNode(Vector2.zero, 1, true, false);
@@ -74,6 +77,8 @@ namespace VNCreator.Editors
                 commandDataEditor.CreateTo("CommandData", storyObj);
             }
         }
+
+        public override string Title { get; } = "Story";
     }
 #endif
 }
