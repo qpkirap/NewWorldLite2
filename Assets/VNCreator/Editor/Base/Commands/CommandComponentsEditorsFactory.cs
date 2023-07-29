@@ -1,6 +1,6 @@
 namespace VNCreator
 {
-    public class CommandComponentsEditorsFactory : ComponentsEditorsFactory<Command>
+    public class CommandComponentsEditorsFactory : ComponentsEditorsFactory<CommandAction>
     {
     }
 }

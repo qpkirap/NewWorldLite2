@@ -10,9 +10,9 @@ namespace VNCreator
     {
         private string guid;
         
-        [SerializeField] private List<Command> commandActions;
+        [SerializeField] private List<CommandAction> commandActions;
         
-        public IReadOnlyList<Command> CommandActions => commandActions;
+        public IReadOnlyList<CommandAction> CommandActions => commandActions;
 
 #if UNITY_EDITOR
         public string GuidEditor => string.IsNullOrEmpty(guid) ? guid = GUID.Generate().ToString() : guid;

@@ -2,7 +2,7 @@ using System;
 
 namespace VNCreator
 {
-    public abstract class Command<T> : Command
+    public abstract class CommandAction<T> : CommandAction
         where T : ICommand<T>
     {
         private T commandCache;
@@ -26,7 +26,7 @@ namespace VNCreator
         
     }
     
-    public abstract class Command : Component
+    public abstract class CommandAction : Component
     {
         public abstract Type GetMyType();
         public abstract void Execute();

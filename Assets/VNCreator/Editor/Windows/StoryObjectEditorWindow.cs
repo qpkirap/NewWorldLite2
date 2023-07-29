@@ -34,6 +34,10 @@ namespace VNCreator.Editors
             _menu.AddItem(new GUIContent("Add Node (Start)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 1, true, false));
             _menu.AddItem(new GUIContent("Add Node (End)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 1, false, true));
             _menu.AddItem(new GUIContent("Save"), false, () => save.SaveGraph(storyObj, graphView));
+            
+            //actions
+            //_menu.AddItem(new GUIContent("CommandAction"));
+            
             _menu.ShowAsContext();
         }
         

@@ -1,6 +1,6 @@
 namespace VNCreator
 {
-    public class TestCommandComponent : Command<TestCommand>
+    public class TestCommandActionComponent : CommandAction<TestCommand>
     {
         public override TestCommand GetCommand()
         {

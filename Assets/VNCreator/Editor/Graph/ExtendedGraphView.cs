@@ -28,9 +28,27 @@ namespace VNCreator.Editors.Graph
             grid.StretchToParentSize();
         }
 
-        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode)
+        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData data)
         {
-            //var actionNode = new ActionNode();
+            var actionNode = new ActionNode(data);
+            
+            actionNode.title = "Action";
+            
+            actionNode.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (_mousePos * (1 / scale)), Vector2.one));
+            
+            if (!_startNode)
+            {
+                Port _inputPort = CreatePort(actionNode, Direction.Input, Port.Capacity.Multi);
+                _inputPort.portName = "Input";
+                actionNode.inputContainer.Add(_inputPort);
+            }
+
+            if (!_endNode)
+            {
+                Port _outputPort = CreatePort(actionNode, Direction.Output, Port.Capacity.Single);
+                _outputPort.portName = "Next";
+                actionNode.outputContainer.Add(_outputPort);
+            }
         }
 
         public void GenerateDialogueNode(string _nodeName, Vector2 _mousePos, int choiceAmount, bool _startNode, bool _endNode)

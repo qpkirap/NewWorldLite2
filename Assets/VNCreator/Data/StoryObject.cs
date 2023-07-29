@@ -4,7 +4,7 @@ using UnityEngine;
 namespace VNCreator
 {
     [CreateAssetMenu(fileName = "New Story", menuName = "New Story")]
-    public class StoryObject : ScriptableEntity
+    public class StoryObject : BaseConfig
     {
         public List<Link> links;
         public List<DialogueNodeData> nodes;

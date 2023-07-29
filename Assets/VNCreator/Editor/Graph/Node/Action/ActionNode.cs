@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace VNCreator
 {
-    public class ActionNode : Node
+    public class ActionNode : BaseNode
     {
         public CommandData CommandData;
         public ActionNodeViewer Viewer;
@@ -16,6 +16,8 @@ namespace VNCreator
             CommandData = commandData ?? new CommandData();
             Viewer = new(this);
         }
+
+        public override NodeType NodeType => NodeType.Action;
     }
 
     public class ActionNodeViewer : VisualElement
@@ -34,6 +36,9 @@ namespace VNCreator
             
             var styleSheetsAsset = AssetDatabase.LoadAssetAtPath<StyleSheet>(ActionNodePaths.StyleSheets);
             styleSheets.Add(styleSheetsAsset);
+            
+            var dropdownAction = this.Query<DropdownField>("DropdownAction");
+            var actionList = this.Query<VisualElement>("ActionList");
         }
     }
 }
