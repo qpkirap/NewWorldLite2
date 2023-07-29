@@ -28,9 +28,9 @@ namespace VNCreator.Editors.Graph
             grid.StretchToParentSize();
         }
 
-        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData data)
+        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode)
         {
-            var actionNode = new ActionNode(data);
+            var actionNode = new ActionNode(null);
             
             actionNode.title = "Action";
             

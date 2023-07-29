@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace VNCreator
 {
-    public class ComponentsEditorsFactory <TComponent> : BaseEditorsFactory<TComponent, ComponentEditorAttribute>
+    public class ComponentsEditorsFactory <TComponent> : BaseEditorsFactory<TComponent, StoryObjectEditorAttribute>
         where TComponent : Component
     {
         protected override IEnumerable<EditorData> GetEntityDataList(Dictionary<string, EditorData> entityCache, params object[] filters)
@@ -19,7 +19,7 @@ namespace VNCreator
                 });
         }
 
-        protected override EditorData CreateEntityData(ComponentEditorAttribute editorAttr)
+        protected override EditorData CreateEntityData(StoryObjectEditorAttribute editorAttr)
         {
             var data = base.CreateEntityData(editorAttr);
 

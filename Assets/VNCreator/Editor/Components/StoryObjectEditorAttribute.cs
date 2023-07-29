@@ -6,7 +6,7 @@ namespace VNCreator
     /// Аттрибут редактора компонента
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class ComponentEditorAttribute : BaseEditorAttribute
+    public class StoryObjectEditorAttribute : BaseEditorAttribute
     {
         /// <summary> 
         /// Фильтр контейнеров, к которым принадлежит компонент 
@@ -19,7 +19,7 @@ namespace VNCreator
         /// <param name="type">Тип компонента</param>
         /// <param name="editorType">Тип редактора компонента</param>
         /// <param name="containerFilter">Фильтр контенеров, к которым принадлежит компонент</param>
-        public ComponentEditorAttribute(Type type, Type editorType, params Type[] containerFilter) : base(type, editorType)
+        public StoryObjectEditorAttribute(Type type, Type editorType, params Type[] containerFilter) : base(type, editorType)
         {
             this.containerFilter = containerFilter;
         }

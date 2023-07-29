@@ -8,6 +8,7 @@ namespace VNCreator
     {
         public List<Link> links;
         public List<DialogueNodeData> nodes;
+        public CommandData CommandData;
 
         public void SetLists(List<DialogueNodeData> _nodes, List<Link> _links)
         {

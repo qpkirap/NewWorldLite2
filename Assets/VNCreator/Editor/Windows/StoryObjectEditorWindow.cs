@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
+using VNCreator.Commands;
 using VNCreator.Editors.Graph;
 
 namespace VNCreator.Editors
@@ -8,7 +9,10 @@ namespace VNCreator.Editors
 #if UNITY_EDITOR
     public class StoryObjectEditorWindow : EditorWindow
     {
-        StoryObject storyObj;
+        private static CommandDataEditor commandDataEditor;
+        
+        private StoryObject storyObj;
+        
         ExtendedGraphView graphView;
         SaveUtility save = new SaveUtility();
 
@@ -16,10 +20,16 @@ namespace VNCreator.Editors
 
         public static void Open(StoryObject _storyObj)
         {
+            commandDataEditor ??= new();
+            commandDataEditor.Init("CommandData", _storyObj);
+            //commandDataEditor.SetSubEntityState(true);
+            
             StoryObjectEditorWindow window = GetWindow<StoryObjectEditorWindow>("Story");
             window.storyObj = _storyObj;
             window.CreateGraphView(_storyObj.nodes == null ? 0 : 1);
             window.minSize = new Vector2(200, 100);
+            
+            CheckActionCommandData(_storyObj);
         }
 
         private void ShowContextMenu(KeyDownEvent keyEvent)
@@ -36,7 +46,7 @@ namespace VNCreator.Editors
             _menu.AddItem(new GUIContent("Save"), false, () => save.SaveGraph(storyObj, graphView));
             
             //actions
-            //_menu.AddItem(new GUIContent("CommandAction"));
+            //_menu.AddItem(new GUIContent("CommandAction"), false, () => graphView.GenerateActionNode(mousePosition, false, false, false, storyObj.nodes));
             
             _menu.ShowAsContext();
         }
@@ -53,6 +63,16 @@ namespace VNCreator.Editors
                 return;
             }
             save.LoadGraph(storyObj, graphView);
+        }
+
+        private static void CheckActionCommandData(StoryObject storyObj)
+        {
+            if (storyObj == null || commandDataEditor == null) return;
+
+            if (storyObj.CommandData == null)
+            {
+                commandDataEditor.CreateTo("CommandData", storyObj);
+            }
         }
     }
 #endif

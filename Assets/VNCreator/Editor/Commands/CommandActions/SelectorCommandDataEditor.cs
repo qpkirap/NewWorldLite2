@@ -38,7 +38,7 @@ namespace VNCreator
 
             if (editor == null) return null;
 
-            var convert = editor as CommandDataEditor;
+            var convert = editor as CommandActionEditor;
 
             editorCache.TryAdd(type, convert);
 

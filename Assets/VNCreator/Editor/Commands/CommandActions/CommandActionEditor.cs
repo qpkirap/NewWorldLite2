@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace VNCreator
 {
-    public class CommandDataEditor : BaseEntityEditor
+    public class CommandActionEditor : BaseEntityEditor
     {
         public override object CloneEntity(object container)
         {

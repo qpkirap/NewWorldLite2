@@ -1,6 +1,6 @@
 namespace VNCreator
 {
-    public abstract class BaseNodeData
+    public abstract class BaseNodeData : ScriptableEntity
     {
         public abstract NodeType NodeType { get; }
     }
