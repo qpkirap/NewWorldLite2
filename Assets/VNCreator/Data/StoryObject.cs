@@ -8,8 +8,12 @@ namespace VNCreator
     {
         public List<Link> links;
         public List<DialogueNodeData> nodes;
-        public CommandData CommandData;
+        public List<CommandData> commandDatas;
 
+        public const string CommandDataKey = nameof(commandDatas);
+        public const string dialogueNodeDataKeys = nameof(nodes);
+        public const string linkDataKeys = nameof(links);
+        
         public void SetLists(List<DialogueNodeData> _nodes, List<Link> _links)
         {
             links = new List<Link>();
@@ -42,7 +46,7 @@ namespace VNCreator
         {
             for (int i = 0; i < nodes.Count; i++)
             {
-                if (nodes[i].Guid == _currentGuid)
+                if (nodes[i].Id == _currentGuid)
                     return nodes[i];
             }
 

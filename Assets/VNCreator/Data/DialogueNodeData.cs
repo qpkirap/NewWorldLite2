@@ -7,9 +7,8 @@ using UnityEngine.AddressableAssets;
 namespace VNCreator
 {
     [Serializable]
-    public class DialogueNodeData
+    public class DialogueNodeData : Component
     {
-        private string guid;
         [SerializeField] private string characterName;
         [SerializeField] private string dialogueText;
         [SerializeField] private bool startNode;
@@ -21,8 +20,7 @@ namespace VNCreator
         [SerializeField] private AudioClip backgroundMusic;
         [SerializeField] List<AssetReference> characterSprList;
         [SerializeField] List<AssetReference> backgroundSprList;
-
-        public string Guid => string.IsNullOrEmpty(guid) ? guid = GUID.Generate().ToString() : guid;
+        
         public string DialogueText => dialogueText;
 
         public bool StartNode => startNode;
@@ -61,10 +59,6 @@ namespace VNCreator
             List<AssetReference> characterSprList,
             List<AssetReference> backgroundSprList)
         {
-#if UNITY_EDITOR
-            if (string.IsNullOrEmpty(guid)) this.guid = GUID.Generate().ToString();      
-#endif
-            
             this.characterName = characterName;
             this.dialogueText = dialogueText;
             this.startNode = startNode;

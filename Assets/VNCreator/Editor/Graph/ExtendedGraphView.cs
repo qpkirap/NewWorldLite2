@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor.Experimental.GraphView;
@@ -14,9 +12,12 @@ namespace VNCreator.Editors.Graph
     public class ExtendedGraphView : GraphView
     {
         private Vector2 mousePosition = new Vector2();
+        private StoryObject Container;
 
-        public ExtendedGraphView()
+        public ExtendedGraphView(StoryObject container)
         {
+            this.Container = container;
+            
             SetupZoom(0.1f, 2);
 
             this.AddManipulator(new ContentDragger());
@@ -28,9 +29,14 @@ namespace VNCreator.Editors.Graph
             grid.StretchToParentSize();
         }
 
-        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode)
+        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
         {
-            var actionNode = new ActionNode(null);
+            if (commandData == null)
+            {
+                var editor = EditorCache.GetEditor(typeof(CommandData));
+            }
+            
+            var actionNode = new ActionNode(commandData);
             
             actionNode.title = "Action";
             
@@ -63,7 +69,7 @@ namespace VNCreator.Editors.Graph
 
         public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _mousePos, int choiceAmount, List<string> _choices, bool _startNode, bool _endNode, DialogueNodeData _data)
         {
-            DialogueNode _node = new DialogueNode(_data);
+            DialogueNode _node = new DialogueNode(_data, Container);
 
             _node.title = _nodeName;
             _node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (_mousePos * (1/scale)), Vector2.one));
@@ -137,6 +143,16 @@ namespace VNCreator.Editors.Graph
             });
 
             return compatiblePorts;
+        }
+
+        public override void RemoveFromSelection(ISelectable selectable)
+        {
+            if (selectable is BaseNode baseNode)
+            {
+                baseNode.GetEditor().RemoveEntity();
+            }
+            
+            base.RemoveFromSelection(selectable);
         }
 
         void MousePos(Vector2 _v2)

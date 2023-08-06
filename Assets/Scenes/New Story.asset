@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5676948236132886448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff6e7b6e203248adafd6313b912c3d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 45f63ae810d74c94b95e2fd88f268621
+  title: 
+  commandActions: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,6 +27,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d55d090c78b6240aa6dccd6042a022, type: 3}
   m_Name: New Story
   m_EditorClassIdentifier: 
+  configFolder: {fileID: 102900000, guid: 6ea315d0fd7389c41b19996891e99ae3, type: 3}
   links:
   - guid: c50cab871faaa4c6b913b1ab1f707675
     targetGuid: 932ef4053570243979937b687e25d374
@@ -80,3 +96,4 @@ MonoBehaviour:
     backgroundMusic: {fileID: 0}
     characterSprList: []
     backgroundSprList: []
+  CommandData: {fileID: 0}

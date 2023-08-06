@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using VNCreator.Commands;
 using VNCreator.Editors.Graph;
 
 namespace VNCreator.Editors
@@ -9,8 +8,6 @@ namespace VNCreator.Editors
 #if UNITY_EDITOR
     public class StoryObjectEditorWindow : BaseConfigEditor<StoryObject>
     {
-        private static CommandDataEditor commandDataEditor;
-        
         private StoryObject storyObj;
         
         ExtendedGraphView graphView;
@@ -20,17 +17,13 @@ namespace VNCreator.Editors
 
         public static void Open(StoryObject _storyObj)
         {
-            commandDataEditor ??= new();
-            commandDataEditor.Init("CommandData", _storyObj);
-
             var window = CreateWindow<StoryObjectEditorWindow>();
-
-            //commandDataEditor.SetSubEntityState(true);
-
+            
             window.storyObj = _storyObj;
+            
             window.CreateGraphView(_storyObj.nodes == null ? 0 : 1);
-
-            CheckActionCommandData(_storyObj);
+            
+            EditorCache.Init();
         }
 
         private void ShowContextMenu(KeyDownEvent keyEvent)
@@ -54,7 +47,7 @@ namespace VNCreator.Editors
         
         void CreateGraphView(int _nodeCount)
         {
-            graphView = new ExtendedGraphView();
+            graphView = new ExtendedGraphView(storyObj);
             graphView.RegisterCallback<KeyDownEvent>(ShowContextMenu);
             graphView.StretchToParentSize();
             
@@ -66,16 +59,6 @@ namespace VNCreator.Editors
                 return;
             }
             save.LoadGraph(storyObj, graphView);
-        }
-
-        private static void CheckActionCommandData(StoryObject storyObj)
-        {
-            if (storyObj == null || commandDataEditor == null) return;
-
-            if (storyObj.CommandData == null)
-            {
-                commandDataEditor.CreateTo("CommandData", storyObj);
-            }
         }
 
         public override string Title { get; } = "Story";

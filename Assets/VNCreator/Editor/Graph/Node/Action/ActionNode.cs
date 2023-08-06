@@ -1,22 +1,22 @@
 #if UNITY_EDITOR
 
 using UnityEditor;
-using UnityEditor.Graphs;
 using UnityEngine.UIElements;
 
 namespace VNCreator
 {
-    public class ActionNode : BaseNode
+    public class ActionNode : BaseNode<CommandAction>
     {
         public CommandData CommandData;
         public ActionNodeViewer Viewer;
 
-        public ActionNode(CommandData commandData)
+        public ActionNode(CommandData commandData, StoryObject container) : base(container)
         {
-            CommandData = commandData ?? new CommandData();
+            CommandData = commandData;
             Viewer = new(this);
         }
 
+        public override string Guid => CommandData.Id;
         public override NodeType NodeType => NodeType.Action;
     }
 
@@ -27,8 +27,6 @@ namespace VNCreator
         
         public ActionNodeViewer(ActionNode node)
         {
-            EditorCache.Init();
-
             this.node = node;
 
             var tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(ActionNodePaths.Tree);

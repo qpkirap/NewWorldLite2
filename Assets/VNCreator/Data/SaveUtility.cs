@@ -19,7 +19,7 @@ namespace VNCreator
             List<DialogueNodeData> nodes = new List<DialogueNodeData>();
             List<Link> links = new List<Link>();
 
-            foreach (DialogueNode _node in _graph.nodes.ToList().Cast<DialogueNode>().ToList())
+            /*foreach (DialogueNode _node in _graph.nodes.ToList().Cast<DialogueNode>().ToList())
             {
                     nodes.Add(
                     new DialogueNodeData(
@@ -35,18 +35,18 @@ namespace VNCreator
                         soundEffect : _node.DialogueNodeData.SoundEffect,
                         backgroundMusic : _node.DialogueNodeData.BackgroundMusic,
                         characterSprList : _node.DialogueNodeData.CharacterSprList?.ToList()));
-            }
+            }*/
 
-            List<Edge> _edges = _graph.edges.ToList();
+            var _edges = _graph.edges.ToList();
             for (int i = 0; i < _edges.Count; i++)
             {
-                DialogueNode _output = (DialogueNode)_edges[i].output.node;
-                DialogueNode _input = (DialogueNode)_edges[i].input.node;
+                var _output = (BaseNode)_edges[i].output.node;
+                var _input = (BaseNode)_edges[i].input.node;
 
                 links.Add(new Link 
                 { 
-                    guid = _output.DialogueNodeData.Guid,
-                    targetGuid = _input.DialogueNodeData.Guid,
+                    guid = _output.Guid,
+                    targetGuid = _input.Guid,
                     portId = i
                 });
             }
@@ -75,11 +75,11 @@ namespace VNCreator
             for (int i = 0; i < _nodes.Count; i++)
             {
                 int _outputIdx = 1;
-                List<Link> _links = _story.links.Where(x => x.guid == _nodes[i].DialogueNodeData.Guid).ToList();
+                List<Link> _links = _story.links.Where(x => x.guid == _nodes[i].DialogueNodeData.Id).ToList();
                 for (int j = 0; j < _links.Count; j++)
                 {
                     string targetGuid = _links[j].targetGuid;
-                    DialogueNode _target = _nodes.First(x => x.DialogueNodeData.Guid == targetGuid);
+                    DialogueNode _target = _nodes.First(x => x.DialogueNodeData.Id == targetGuid);
                     LinkNodes(_nodes[i].outputContainer[_links.Count > 1 ? _outputIdx : 0].Q<Port>(), (Port)_target.inputContainer[0], _graph);
                     _outputIdx += 2;
                 }

@@ -19,7 +19,7 @@ namespace VNCreator
             if (PlayerPrefs.GetString(GameSaveManager.currentLoadName) == string.Empty)
             {
                 CurrentDialogueNode = story.GetFirstNode();
-                loadList.Add(CurrentDialogueNode.Guid);
+                loadList.Add(CurrentDialogueNode.Id);
             }
             else
             {
@@ -28,7 +28,7 @@ namespace VNCreator
                 {
                     CurrentDialogueNode = story.GetFirstNode();
                     loadList = new List<string>();
-                    loadList.Add(CurrentDialogueNode.Guid);
+                    loadList.Add(CurrentDialogueNode.Id);
                 }
                 else
                 {
@@ -41,9 +41,9 @@ namespace VNCreator
         {
             if (!lastNode) 
             {
-                CurrentDialogueNode = story.GetNextNode(CurrentDialogueNode.Guid, _choiceId);
+                CurrentDialogueNode = story.GetNextNode(CurrentDialogueNode.Id, _choiceId);
                 lastNode = CurrentDialogueNode.EndNode;
-                loadList.Add(CurrentDialogueNode.Guid);
+                loadList.Add(CurrentDialogueNode.Id);
             }
         }
 

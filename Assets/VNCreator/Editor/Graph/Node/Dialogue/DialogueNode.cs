@@ -22,14 +22,15 @@ using UnityEngine.Localization;
 namespace VNCreator
 {
 #if UNITY_EDITOR
-    public class DialogueNode : BaseNode
+    public class DialogueNode : BaseNode<DialogueNodeData>
     {
         public DialogueNodeData DialogueNodeData;
         public NodeViewer visuals;
-        
+
+        public override string Guid => DialogueNodeData.Id;
         public override NodeType NodeType => NodeType.Dialogue;
 
-        public DialogueNode(DialogueNodeData _data)
+        public DialogueNode(DialogueNodeData _data, StoryObject container) : base(container)
         {
             DialogueNodeData = _data != null ? _data : new DialogueNodeData();
             visuals = new NodeViewer(this);
