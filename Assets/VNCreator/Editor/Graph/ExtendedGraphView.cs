@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 #if UNITY_EDITOR
+using System.CodeDom;
 using UnityEditor.Experimental.GraphView;
 #endif
 using UnityEngine;
@@ -27,6 +28,11 @@ namespace VNCreator.Editors.Graph
             var grid = new GridBackground();
             Insert(0, grid);
             grid.StretchToParentSize();
+
+            this.deleteSelection += (operationName, user) =>
+            {
+                Debug.Log("asdf");
+            };
         }
 
         public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
@@ -57,37 +63,42 @@ namespace VNCreator.Editors.Graph
             AddElement(CreateDialogueNode(_nodeName, _mousePos, choiceAmount, _startNode, _endNode));
         }
 
-        public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _mousePos, int choiceAmount, bool _startNode, bool _endNode)
+        public DialogueNode CreateDialogueNode(string nodeName, Vector2 mousePos, int choiceAmount, bool _startNode, bool _endNode)
         {
-            return CreateDialogueNode(_nodeName, _mousePos, choiceAmount, new string[choiceAmount].ToList(), _startNode, _endNode, new DialogueNodeData());
+            return CreateDialogueNode(nodeName, mousePos, choiceAmount, new string[choiceAmount].ToList(), _startNode, _endNode);
         }
 
         public DialogueNode CreateDialogueNode(
-            string _nodeName, 
-            Vector2 _mousePos, 
+            string nodeName, 
+            Vector2 mousePos, 
             int choiceAmount, 
-            List<string> _choices,
-            bool _startNode, 
-            bool _endNode, 
-            DialogueNodeData _data)
+            List<string> choices,
+            bool startNode, 
+            bool endNode, 
+            DialogueNodeData data = null)
         {
-            DialogueNode _node = new DialogueNode(_data, Container);
+            DialogueNode _node = new DialogueNode(data, Container);
 
-            _node.title = _nodeName;
-            _node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (_mousePos * (1/scale)), Vector2.one));
-            _node.dialogue.SetValue("startNode", _startNode);
-            _node.dialogue.SetValue("endNode", _endNode);
+            _node.RegisterCallback<ChangeEvent<DialogueNode>>(e =>
+            {
+                Debug.Log("sadf");
+            });
+
+            _node.title = nodeName;
+            _node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (mousePos * (1/scale)), Vector2.one));
+            _node.dialogue.SetValue("startNode", startNode);
+            _node.dialogue.SetValue("endNode", endNode);
             _node.dialogue.SetValue("choices", choiceAmount);
-            _node.dialogue.SetValue("choiceOptions", _choices);
+            _node.dialogue.SetValue("choiceOptions", choices);
 
-            if (!_startNode)
+            if (!startNode)
             {
                 Port _inputPort = CreatePort(_node, Direction.Input, Port.Capacity.Multi);
                 _inputPort.portName = "Input";
                 _node.inputContainer.Add(_inputPort);
             }
 
-            if (!_endNode)
+            if (!endNode)
             {
                 if (choiceAmount > 1)
                 {
@@ -96,7 +107,7 @@ namespace VNCreator.Editors.Graph
                         Port _outputPort = CreatePort(_node, Direction.Output, Port.Capacity.Single);
                         _outputPort.portName = "Choice " + (i + 1);
 
-                        string _value = _data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.dialogue.ChoiceOptions[i];
+                        string _value = data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.dialogue.ChoiceOptions[i];
                         int _idx = i;
 
                         TextField _field = new TextField { value = _value };
@@ -145,16 +156,6 @@ namespace VNCreator.Editors.Graph
             });
 
             return compatiblePorts;
-        }
-
-        public override void RemoveFromSelection(ISelectable selectable)
-        {
-            if (selectable is BaseNode baseNode)
-            {
-                baseNode.GetEditor().RemoveEntity();
-            }
-            
-            base.RemoveFromSelection(selectable);
         }
 
         void MousePos(Vector2 _v2)

@@ -29,7 +29,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configFolder: {fileID: 102900000, guid: 6ea315d0fd7389c41b19996891e99ae3, type: 3}
   links: []
-  nodes: []
+  nodes:
+  - {fileID: 2397717181672438979}
+  - {fileID: 2163831802554057475}
   commandDatas: []
 --- !u!114 &18701796619799512
 MonoBehaviour:
@@ -46,3 +48,95 @@ MonoBehaviour:
   id: ae260910c2c893a4ca68748e752ed604
   title: 
   commandActions: []
+--- !u!114 &2163831802554057475
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 102bb99c92215ef47bdf8bed9743d53e
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &2397717181672438979
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 892eb36ae83558f4c941dc84519ce315
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &5830262482735570359
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: cd6b5d4515ba04d4098e61a5a34ba876
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 0
+  endNode: 0
+  choices: 1
+  choiceOptions: []
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []

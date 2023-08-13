@@ -34,7 +34,9 @@ namespace VNCreator
             {
                 editorCache.SetSubEntityState(true);
                 
-                dialogue = (DialogueNodeData)editorCache.CreateTo(StoryObject.DialogueNodeDataKeys, container);
+                dialogue = (DialogueNodeData)editorCache.InstantiateEntity(container);
+                
+                container.nodes.Add(dialogue);
             }
             
             visuals = new NodeViewer(this);
@@ -47,7 +49,7 @@ namespace VNCreator
 
         public NodeViewer(DialogueNode _node)
         {
-                node = _node;
+            node = _node;
 
             VisualTreeAsset tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(DialogueNodePaths.Tree);
             tree.CloneTree(this);

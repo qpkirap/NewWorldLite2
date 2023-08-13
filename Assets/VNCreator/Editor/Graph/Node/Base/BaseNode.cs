@@ -12,6 +12,8 @@ namespace VNCreator
         protected BaseNode(string fieldName, object container) : base(fieldName, container)
         {
             editorCache = EditorCache.GetEditor(typeof(T));
+            
+            editorCache.Init(fieldName, container);
         }
 
         public override BaseEntityEditor GetEditor()
