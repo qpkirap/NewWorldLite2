@@ -10,9 +10,17 @@ namespace VNCreator
         public CommandData CommandData;
         public ActionNodeViewer Viewer;
 
-        public ActionNode(CommandData commandData, StoryObject container) : base(container)
+        public ActionNode(CommandData commandData, StoryObject container) : base(StoryObject.CommandDataKey, container)
         {
             CommandData = commandData;
+
+            if (CommandData == null)
+            {
+                editorCache.SetSubEntityState(true);
+                
+                CommandData = (CommandData)editorCache.CreateTo(StoryObject.CommandDataKey, container);
+            }
+            
             Viewer = new(this);
         }
 
@@ -22,7 +30,6 @@ namespace VNCreator
 
     public class ActionNodeViewer : VisualElement
     {
-        private IEditorsFactory EditorsFactory => EditorCache.CommandComponentsEditorsFactory;
         private ActionNode node;
         
         public ActionNodeViewer(ActionNode node)

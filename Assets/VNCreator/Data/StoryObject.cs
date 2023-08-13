@@ -11,7 +11,7 @@ namespace VNCreator
         public List<CommandData> commandDatas;
 
         public const string CommandDataKey = nameof(commandDatas);
-        public const string dialogueNodeDataKeys = nameof(nodes);
+        public const string DialogueNodeDataKeys = nameof(nodes);
         public const string linkDataKeys = nameof(links);
         
         public void SetLists(List<DialogueNodeData> _nodes, List<Link> _links)

@@ -31,12 +31,7 @@ namespace VNCreator.Editors.Graph
 
         public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
         {
-            if (commandData == null)
-            {
-                var editor = EditorCache.GetEditor(typeof(CommandData));
-            }
-            
-            var actionNode = new ActionNode(commandData);
+            var actionNode = new ActionNode(commandData, Container);
             
             actionNode.title = "Action";
             
@@ -67,16 +62,23 @@ namespace VNCreator.Editors.Graph
             return CreateDialogueNode(_nodeName, _mousePos, choiceAmount, new string[choiceAmount].ToList(), _startNode, _endNode, new DialogueNodeData());
         }
 
-        public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _mousePos, int choiceAmount, List<string> _choices, bool _startNode, bool _endNode, DialogueNodeData _data)
+        public DialogueNode CreateDialogueNode(
+            string _nodeName, 
+            Vector2 _mousePos, 
+            int choiceAmount, 
+            List<string> _choices,
+            bool _startNode, 
+            bool _endNode, 
+            DialogueNodeData _data)
         {
             DialogueNode _node = new DialogueNode(_data, Container);
 
             _node.title = _nodeName;
             _node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (_mousePos * (1/scale)), Vector2.one));
-            _node.DialogueNodeData.SetValue("startNode", _startNode);
-            _node.DialogueNodeData.SetValue("endNode", _endNode);
-            _node.DialogueNodeData.SetValue("choices", choiceAmount);
-            _node.DialogueNodeData.SetValue("choiceOptions", _choices);
+            _node.dialogue.SetValue("startNode", _startNode);
+            _node.dialogue.SetValue("endNode", _endNode);
+            _node.dialogue.SetValue("choices", choiceAmount);
+            _node.dialogue.SetValue("choiceOptions", _choices);
 
             if (!_startNode)
             {
@@ -94,17 +96,17 @@ namespace VNCreator.Editors.Graph
                         Port _outputPort = CreatePort(_node, Direction.Output, Port.Capacity.Single);
                         _outputPort.portName = "Choice " + (i + 1);
 
-                        string _value = _data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.DialogueNodeData.ChoiceOptions[i];
+                        string _value = _data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.dialogue.ChoiceOptions[i];
                         int _idx = i;
 
                         TextField _field = new TextField { value = _value };
                         _field.RegisterValueChangedCallback(
                             e =>
                             {
-                                var copyList = _node.DialogueNodeData.ChoiceOptions.ToList();
+                                var copyList = _node.dialogue.ChoiceOptions.ToList();
                                 copyList[_idx] = _field.value;
                                 
-                                _node.DialogueNodeData.SetValue("choiceOptions", copyList);
+                                _node.dialogue.SetValue("choiceOptions", copyList);
                             }
                             );
 

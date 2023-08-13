@@ -152,6 +152,29 @@ namespace VNCreator
             }
         }
         
+        private bool TryCreateEditor(Type entityType, out ICustomEditor editor)
+        {
+            editor = null;
+
+            if (editorAttributeCache.TryGetValue(entityType.Name, out var editorAttr))
+            {
+                if (editorAttr.editorType.IsSubclassOf(typeof(BaseEditor)))
+                {
+                    editor = editorAttr.editorType.CreateByType<BaseEditor>();
+                }
+                else if (editorAttr.editorType.IsSubclassOf(typeof(BaseConfigEditor)))
+                {
+                    editor = editorAttr.editorType.CreateByType<BaseConfigEditor>();
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
         private void CheckEditorCache()
         {
             if (editorAttributeCache == null || entityMenuCache == null || entityEditorCache == null)

@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VNCreator
 {
     //TODO нужно разделить Editor и Runtime
     public static class EditorCache
     {
-        public static CommandComponentsEditorsFactory CommandComponentsEditorsFactory;
-
         private static readonly Dictionary<Type, BaseEntityEditor> EditorsCache = new();
 
         public static void Init()
         {
-            CommandComponentsEditorsFactory ??= new();
         }
         
         public static BaseEntityEditor GetEditor(Type type)
@@ -21,18 +19,35 @@ namespace VNCreator
 
             if (EditorsCache.TryGetValue(type, out var editorC))
             {
-                return editorC;
+                if (editorC != null) return editorC;
             }
             
-            var editor = CommandComponentsEditorsFactory.CreateEditor(type);
+            var factory = CreateFactory(type);
 
-            if (editor == null) return null;
+            if (factory == null) return null;
 
-            var convert = editor as BaseEntityEditor;
+            var editor = (BaseEntityEditor)factory.CreateEditor(type);
 
-            EditorsCache.TryAdd(type, convert);
+            EditorsCache.TryAdd(type, editor);
 
-            return convert;
+            return editor;
+        }
+        
+        private static IEditorsFactory CreateFactory(Type componentType)
+        {
+            var factoryType = ReflectionUtils
+                .FindChildTypesOf(typeName: "ComponentsEditorsFactory")
+                .FirstOrDefault(
+                    x =>
+                    {
+                        return x.BaseType
+                            .GetGenericArguments()
+                            .Contains(componentType);
+                    });
+
+            return factoryType != null
+                ? factoryType.CreateByType<IEditorsFactory>()
+                : default;
         }
     }
 }

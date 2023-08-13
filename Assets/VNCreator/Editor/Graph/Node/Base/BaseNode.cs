@@ -4,7 +4,8 @@ using Node = UnityEditor.Experimental.GraphView.Node;
 
 namespace VNCreator
 {
-    public abstract class BaseNode<T> : BaseNode where T : Component
+    public abstract class BaseNode<T> : BaseNode 
+        where T : Component
     {
         protected BaseEntityEditor editorCache;
         

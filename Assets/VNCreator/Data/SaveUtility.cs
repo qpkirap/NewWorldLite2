@@ -75,11 +75,11 @@ namespace VNCreator
             for (int i = 0; i < _nodes.Count; i++)
             {
                 int _outputIdx = 1;
-                List<Link> _links = _story.links.Where(x => x.guid == _nodes[i].DialogueNodeData.Id).ToList();
+                List<Link> _links = _story.links.Where(x => x.guid == _nodes[i].dialogue.Id).ToList();
                 for (int j = 0; j < _links.Count; j++)
                 {
                     string targetGuid = _links[j].targetGuid;
-                    DialogueNode _target = _nodes.First(x => x.DialogueNodeData.Id == targetGuid);
+                    DialogueNode _target = _nodes.First(x => x.dialogue.Id == targetGuid);
                     LinkNodes(_nodes[i].outputContainer[_links.Count > 1 ? _outputIdx : 0].Q<Port>(), (Port)_target.inputContainer[0], _graph);
                     _outputIdx += 2;
                 }

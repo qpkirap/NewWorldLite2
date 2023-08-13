@@ -31,10 +31,8 @@ namespace VNCreator
             {
                 return editorC;
             }
-            
-            var factory = EditorCache.CommandComponentsEditorsFactory;
 
-            var editor = factory.CreateEditor(type);
+            var editor = EditorCache.GetEditor(type);
 
             if (editor == null) return null;
 
