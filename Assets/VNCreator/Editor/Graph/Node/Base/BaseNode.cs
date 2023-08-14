@@ -9,11 +9,19 @@ namespace VNCreator
     {
         protected BaseEntityEditor editorCache;
         
-        protected BaseNode(string fieldName, object container) : base(fieldName, container)
+        public T EntityCache { get; }
+        
+        protected BaseNode(string fieldName, object container, T entityCache = null) : base(fieldName, container)
         {
             editorCache = EditorCache.GetEditor(typeof(T));
             
+            editorCache.SetSubEntityState(true);
+            
             editorCache.Init(fieldName, container);
+
+            EntityCache = entityCache;
+            
+            EntityCache ??= (T)editorCache.InstantiateEntity(container);
         }
 
         public override BaseEntityEditor GetEditor()

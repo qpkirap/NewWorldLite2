@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 #if UNITY_EDITOR
-using System.CodeDom;
 using UnityEditor.Experimental.GraphView;
 #endif
 using UnityEngine;
@@ -77,25 +76,20 @@ namespace VNCreator.Editors.Graph
             bool endNode, 
             DialogueNodeData data = null)
         {
-            DialogueNode _node = new DialogueNode(data, Container);
+            DialogueNode node = new DialogueNode(StoryObject.DialogueNodeDataKeys, Container, data);
 
-            _node.RegisterCallback<ChangeEvent<DialogueNode>>(e =>
-            {
-                Debug.Log("sadf");
-            });
-
-            _node.title = nodeName;
-            _node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (mousePos * (1/scale)), Vector2.one));
-            _node.dialogue.SetValue("startNode", startNode);
-            _node.dialogue.SetValue("endNode", endNode);
-            _node.dialogue.SetValue("choices", choiceAmount);
-            _node.dialogue.SetValue("choiceOptions", choices);
+            node.title = nodeName;
+            node.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (mousePos * (1/scale)), Vector2.one));
+            node.EntityCache.SetValue("startNode", startNode);
+            node.EntityCache.SetValue("endNode", endNode);
+            node.EntityCache.SetValue("choices", choiceAmount);
+            node.EntityCache.SetValue("choiceOptions", choices);
 
             if (!startNode)
             {
-                Port _inputPort = CreatePort(_node, Direction.Input, Port.Capacity.Multi);
+                Port _inputPort = CreatePort(node, Direction.Input, Port.Capacity.Multi);
                 _inputPort.portName = "Input";
-                _node.inputContainer.Add(_inputPort);
+                node.inputContainer.Add(_inputPort);
             }
 
             if (!endNode)
@@ -104,41 +98,41 @@ namespace VNCreator.Editors.Graph
                 {
                     for (int i = 0; i < choiceAmount; i++)
                     {
-                        Port _outputPort = CreatePort(_node, Direction.Output, Port.Capacity.Single);
+                        Port _outputPort = CreatePort(node, Direction.Output, Port.Capacity.Single);
                         _outputPort.portName = "Choice " + (i + 1);
 
-                        string _value = data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : _node.dialogue.ChoiceOptions[i];
+                        string _value = data.ChoiceOptions.Count == 0 ? "Choice " + (i + 1) : node.EntityCache.ChoiceOptions[i];
                         int _idx = i;
 
                         TextField _field = new TextField { value = _value };
                         _field.RegisterValueChangedCallback(
                             e =>
                             {
-                                var copyList = _node.dialogue.ChoiceOptions.ToList();
+                                var copyList = node.EntityCache.ChoiceOptions.ToList();
                                 copyList[_idx] = _field.value;
                                 
-                                _node.dialogue.SetValue("choiceOptions", copyList);
+                                node.EntityCache.SetValue("choiceOptions", copyList);
                             }
                             );
 
-                        _node.outputContainer.Add(_field);
-                        _node.outputContainer.Add(_outputPort);
+                        node.outputContainer.Add(_field);
+                        node.outputContainer.Add(_outputPort);
                     }
                 }
                 else
                 {
-                    Port _outputPort = CreatePort(_node, Direction.Output, Port.Capacity.Single);
+                    Port _outputPort = CreatePort(node, Direction.Output, Port.Capacity.Single);
                     _outputPort.portName = "Next";
-                    _node.outputContainer.Add(_outputPort);
+                    node.outputContainer.Add(_outputPort);
                 }
             }
             
-            _node.mainContainer.Add(_node.visuals);
+            node.mainContainer.Add(node.visuals);
 
-            _node.RefreshExpandedState();
-            _node.RefreshPorts();
+            node.RefreshExpandedState();
+            node.RefreshPorts();
 
-            return _node;
+            return node;
         }
 
         Port CreatePort(BaseNode _node, Direction _portDir, Port.Capacity _capacity)

@@ -20,36 +20,25 @@ namespace VNCreator
 #if UNITY_EDITOR
     public class DialogueNode : BaseNode<DialogueNodeData>
     {
-        public DialogueNodeData dialogue;
-        public NodeViewer visuals;
+        public DialogueNodeViewer visuals;
 
-        public override string Guid => dialogue.Id;
+        public override string Guid => EntityCache.Id;
         public override NodeType NodeType => NodeType.Dialogue;
-
-        public DialogueNode(DialogueNodeData _data, StoryObject container) : base(StoryObject.DialogueNodeDataKeys, container)
+        
+        public DialogueNode(string fieldName, object container, DialogueNodeData entityCache = null) 
+            : base(fieldName, container, entityCache)
         {
-            dialogue = _data;
-
-            if (dialogue == null)
-            {
-                editorCache.SetSubEntityState(true);
-                
-                dialogue = (DialogueNodeData)editorCache.InstantiateEntity(container);
-                
-                container.nodes.Add(dialogue);
-            }
-            
-            visuals = new NodeViewer(this);
+            visuals = new DialogueNodeViewer(this);
         }
     }
 
-    public class NodeViewer : VisualElement
+    public class DialogueNodeViewer : VisualElement
     {
         DialogueNode node;
 
-        public NodeViewer(DialogueNode _node)
+        public DialogueNodeViewer(DialogueNode node)
         {
-            node = _node;
+            this.node = node;
 
             VisualTreeAsset tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(DialogueNodePaths.Tree);
             tree.CloneTree(this);
@@ -60,41 +49,41 @@ namespace VNCreator
             InitBgSprListViewAsync();
 
             TextField charNameField = this.Query<TextField>("Char_Name");
-            charNameField.value = node.dialogue.CharacterName;
+            charNameField.value = this.node.EntityCache.CharacterName;
             charNameField.RegisterValueChangedCallback(
                 e =>
                 {
-                    node.dialogue.SetValue("characterName", charNameField.value);
+                    this.node.EntityCache.SetValue("characterName", charNameField.value);
                 }
             );
 
             TextField dialogueField = this.Query<TextField>("Dialogue_Field");
             dialogueField.multiline = true;
-            dialogueField.value = node.dialogue.DialogueText;
+            dialogueField.value = this.node.EntityCache.DialogueText;
             dialogueField.RegisterValueChangedCallback(
                 e =>
                 {
-                    node.dialogue.SetValue("dialogueText", dialogueField.value);
+                    this.node.EntityCache.SetValue("dialogueText", dialogueField.value);
                 }
             );
 
             ObjectField sfxField = this.Query<ObjectField>("Sound_Field").First();
             sfxField.objectType = typeof(AudioClip);
-            sfxField.value = node.dialogue.SoundEffect;
+            sfxField.value = this.node.EntityCache.SoundEffect;
             sfxField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>
                 {
-                    node.dialogue.SetValue("soundEffect", (AudioClip)e.newValue);
+                    this.node.EntityCache.SetValue("soundEffect", (AudioClip)e.newValue);
                 }
             );
 
             ObjectField musicField = this.Query<ObjectField>("Music_Field").First();
             musicField.objectType = typeof(AudioClip);
-            musicField.value = node.dialogue.BackgroundMusic;
+            musicField.value = this.node.EntityCache.BackgroundMusic;
             musicField.RegisterCallback<ChangeEvent<UnityEngine.Object>>(
                 e =>
                 {
-                    node.dialogue.SetValue("backgroundMusic", (AudioClip)e.newValue);
+                    this.node.EntityCache.SetValue("backgroundMusic", (AudioClip)e.newValue);
                 }
             );
         }
@@ -104,7 +93,7 @@ namespace VNCreator
             ListView view = this.Query<ListView>("Bg_Img_List");
             VisualElement bgSprDisplay = this.Query<VisualElement>("Back_Img");
 
-            var source = node.dialogue.GetValue<List<AssetReference>>("backgroundSprList");
+            var source = node.EntityCache.GetValue<List<AssetReference>>("backgroundSprList");
 
             view.itemsSource = source;
             
@@ -137,7 +126,7 @@ namespace VNCreator
                     }
                 );
                 
-                var item = node.dialogue.BackgroundSprList[index];
+                var item = node.EntityCache.BackgroundSprList[index];
 
                 if (item != null && item.RuntimeKeyIsValid())
                 {
@@ -152,10 +141,10 @@ namespace VNCreator
 
             async void UpdatePreviewAsync()
             {
-                if (node.dialogue.BackgroundSprList != null
-                    && node.dialogue.BackgroundSprList.Any())
+                if (node.EntityCache.BackgroundSprList != null
+                    && node.EntityCache.BackgroundSprList.Any())
                 {
-                    var items = node.dialogue.BackgroundSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
+                    var items = node.EntityCache.BackgroundSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
 
                     if (items.Any())
                     {
@@ -180,7 +169,7 @@ namespace VNCreator
             ListView view = this.Query<ListView>("Char_Img_List");
             VisualElement charSprDisplay = this.Query<VisualElement>("Char_Img");
 
-            var source = node.dialogue.GetValue<List<AssetReference>>("characterSprList");
+            var source = node.EntityCache.GetValue<List<AssetReference>>("characterSprList");
 
             view.itemsSource = source;
             
@@ -213,7 +202,7 @@ namespace VNCreator
                     }
                 );
                 
-                var item = node.dialogue.CharacterSprList[index];
+                var item = node.EntityCache.CharacterSprList[index];
 
                 if (item != null && item.RuntimeKeyIsValid())
                 {
@@ -228,10 +217,10 @@ namespace VNCreator
 
             async void UpdatePreviewAsync()
             {
-                if (node.dialogue.CharacterSprList != null
-                    && node.dialogue.CharacterSprList.Any())
+                if (node.EntityCache.CharacterSprList != null
+                    && node.EntityCache.CharacterSprList.Any())
                 {
-                    var items = node.dialogue.CharacterSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
+                    var items = node.EntityCache.CharacterSprList.Where(x => x != null && x.RuntimeKeyIsValid()).ToList();
 
                     if (items.Any())
                     {

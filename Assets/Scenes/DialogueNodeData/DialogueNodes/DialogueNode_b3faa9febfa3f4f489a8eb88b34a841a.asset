@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: DialogueNode_b3faa9febfa3f4f489a8eb88b34a841a
+  m_EditorClassIdentifier: 
+  id: b3faa9febfa3f4f489a8eb88b34a841a
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 0
+  endNode: 0
+  choices: 1
+  choiceOptions: []
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []

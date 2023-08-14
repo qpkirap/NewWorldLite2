@@ -12,36 +12,39 @@ namespace VNCreator
     public class SaveUtility
     {
 #if UNITY_EDITOR
-        public void SaveGraph(StoryObject _story, ExtendedGraphView _graph)
+        public void SaveGraph(StoryObject _story, ExtendedGraphView graph)
         {
             EditorUtility.SetDirty(_story);
 
             List<DialogueNodeData> nodes = new List<DialogueNodeData>();
             List<Link> links = new List<Link>();
-
-            /*foreach (DialogueNode _node in _graph.nodes.ToList().Cast<DialogueNode>().ToList())
+            
+            foreach (var graphNode in graph.nodes.Cast<BaseNode>())
             {
-                    nodes.Add(
-                    new DialogueNodeData(
-                        guid: _node.DialogueNodeData.Guid,
-                        characterName : _node.DialogueNodeData.CharacterName,
-                        dialogueText : _node.DialogueNodeData.DialogueText,
-                        backgroundSprList : _node.DialogueNodeData.BackgroundSprList?.ToList(),
-                        startNode : _node.DialogueNodeData.StartNode,
-                        endNode : _node.DialogueNodeData.EndNode,
-                        choices : _node.DialogueNodeData.Choices,
-                        choiceOptions : _node.DialogueNodeData.ChoiceOptions?.ToList(),
-                        nodePosition : _node.GetPosition(),
-                        soundEffect : _node.DialogueNodeData.SoundEffect,
-                        backgroundMusic : _node.DialogueNodeData.BackgroundMusic,
-                        characterSprList : _node.DialogueNodeData.CharacterSprList?.ToList()));
-            }*/
+                switch (graphNode.NodeType)
+                {
+                    case NodeType.Action:
+                    {
+                        var action = (ActionNode)graphNode;
 
-            var _edges = _graph.edges.ToList();
-            for (int i = 0; i < _edges.Count; i++)
+                        _story.commandDatas.Add(action.EntityCache);
+                    }
+                        break;
+                    case NodeType.Dialogue:
+                    {
+                        var dialogue = (DialogueNode)graphNode;
+                        
+                        _story.nodes.SetValue(StoryObject.DialogueNodeDataKeys, dialogue);
+                    }
+                        break;
+                }
+            }
+
+            var edges = graph.edges.ToList();
+            for (int i = 0; i < edges.Count; i++)
             {
-                var _output = (BaseNode)_edges[i].output.node;
-                var _input = (BaseNode)_edges[i].input.node;
+                var _output = (BaseNode)edges[i].output.node;
+                var _input = (BaseNode)edges[i].input.node;
 
                 links.Add(new Link 
                 { 
@@ -52,6 +55,8 @@ namespace VNCreator
             }
 
             _story.SetLists(nodes, links);
+            
+            EditorUtility.SetDirty(_story);
 
             //_story.nodes = nodes;
             //_story.links = links;
@@ -70,18 +75,23 @@ namespace VNCreator
 
         void GenerateLinks(StoryObject _story, ExtendedGraphView _graph)
         {
-            List<DialogueNode> _nodes = _graph.nodes.ToList().Cast<DialogueNode>().ToList();
+            var nodes = _graph.nodes.ToList().Cast<BaseNode>().ToList();
 
-            for (int i = 0; i < _nodes.Count; i++)
+            for (int i = 0; i < nodes.Count; i++)
             {
-                int _outputIdx = 1;
-                List<Link> _links = _story.links.Where(x => x.guid == _nodes[i].dialogue.Id).ToList();
-                for (int j = 0; j < _links.Count; j++)
+                int outputIdx = 1;
+                
+                List<Link> links = _story.links.Where(x => x.guid == nodes[i].Guid).ToList();
+                
+                for (int j = 0; j < links.Count; j++)
                 {
-                    string targetGuid = _links[j].targetGuid;
-                    DialogueNode _target = _nodes.First(x => x.dialogue.Id == targetGuid);
-                    LinkNodes(_nodes[i].outputContainer[_links.Count > 1 ? _outputIdx : 0].Q<Port>(), (Port)_target.inputContainer[0], _graph);
-                    _outputIdx += 2;
+                    var targetGuid = links[j].targetGuid;
+                    
+                    var target = nodes.First(x => x.Guid == targetGuid);
+                    
+                    LinkNodes(nodes[i].outputContainer[links.Count > 1 ? outputIdx : 0].Q<Port>(), (Port)target.inputContainer[0], _graph);
+                    
+                    outputIdx += 2;
                 }
             }
         }
