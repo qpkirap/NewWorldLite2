@@ -14,6 +14,8 @@ namespace VNCreator.Editors.Graph
         private Vector2 mousePosition = new Vector2();
         private StoryObject Container;
 
+        private readonly List<BaseNode> allNodes = new();
+
         public ExtendedGraphView(StoryObject container)
         {
             this.Container = container;
@@ -30,7 +32,17 @@ namespace VNCreator.Editors.Graph
 
             this.deleteSelection += (operationName, user) =>
             {
-                Debug.Log("asdf");
+                foreach (var baseNode in allNodes.ToList())
+                {
+                    if (baseNode.IsSelectable())
+                    {
+                        baseNode.OnDelete();
+                        
+                        DeleteSelection();
+
+                        allNodes.Remove(baseNode);
+                    }
+                }
             };
         }
 
@@ -131,6 +143,8 @@ namespace VNCreator.Editors.Graph
 
             node.RefreshExpandedState();
             node.RefreshPorts();
+            
+            allNodes.Add(node);
 
             return node;
         }

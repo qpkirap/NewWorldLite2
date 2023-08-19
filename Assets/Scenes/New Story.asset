@@ -1,5 +1,193 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8644056588378207575
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 10e9683d0afc3954aadbee552177663d
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-7839574631193745346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 9123d879855c8ed4e82978bff55f36c0
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-7838945401151587993
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 8fb9ebd7bc831b44b9013056536ed87f
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-7534698549209034898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: a7ad4b3cb0d6f944eb13cb1895d87c54
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-7225834930469811818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 55b98307745479e4d88f50184f63a499
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 0
+  endNode: 0
+  choices: 3
+  choiceOptions:
+  - 
+  - 
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-6809340462937600790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: d14d53c4e6090e74ba9a2a6373278de2
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
 --- !u!114 &-6376999739774349111
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13,6 +201,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: dcebc70415cbd5241af74307c751c44f
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-6238600772231337146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 6830e87e22494df4c97f74ef0ca7bd41
   title: 
   characterName: 
   dialogueText: 
@@ -170,6 +389,37 @@ MonoBehaviour:
   id: ae260910c2c893a4ca68748e752ed604
   title: 
   commandActions: []
+--- !u!114 &1913447115898592217
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 2e2eadad638fe60449c428c244a8e447
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
 --- !u!114 &2163831802554057475
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -417,6 +667,38 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   characterSprList: []
   backgroundSprList: []
+--- !u!114 &7190648239210746569
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 240c4e2fa79390344b499601db4f6a2f
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 0
+  endNode: 0
+  choices: 2
+  choiceOptions:
+  - 
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
 --- !u!114 &8022170082542136440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -430,6 +712,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: d98da397e3062754aa4e60436e12b7b4
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 1
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &8821631321275985034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: b89d47f2f0435fa4b8d2475cb70141ad
   title: 
   characterName: 
   dialogueText: 

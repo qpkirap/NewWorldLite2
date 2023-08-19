@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using UnityEngine;
 using Node = UnityEditor.Experimental.GraphView.Node;
 
 namespace VNCreator
@@ -10,18 +11,30 @@ namespace VNCreator
         protected BaseEntityEditor editorCache;
         
         public T EntityCache { get; }
+        protected object Container;
         
         protected BaseNode(string fieldName, object container, T entityCache = null) : base(fieldName, container)
         {
             editorCache = EditorCache.GetEditor(typeof(T));
             
             editorCache.SetSubEntityState(true);
+
+            this.Container = container.GetValue(fieldName);
             
-            editorCache.Init(fieldName, container);
+            editorCache.Init(fieldName, Container);
 
             EntityCache = entityCache;
             
-            EntityCache ??= (T)editorCache.InstantiateEntity(container);
+            EntityCache ??= (T)editorCache.CreateTo(fieldName, Container);
+        }
+
+        public override void OnDelete()
+        {
+            Debug.Log("УДАЛЯТЬ");
+            
+            editorCache.RemoveEntity();
+            
+            base.OnDelete();
         }
 
         public override BaseEntityEditor GetEditor()
@@ -46,12 +59,16 @@ namespace VNCreator
 
         private void Init(string fieldName, object container)
         {
-            GetEditor()?.Init(fieldName, Container);
+            GetEditor()?.Init(fieldName, container);
         }
 
         public abstract BaseEntityEditor GetEditor();
         public abstract string Guid { get; }
         public abstract NodeType NodeType { get; }
+
+        public virtual void OnDelete()
+        {
+        }
     }
 }
 

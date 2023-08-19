@@ -176,6 +176,9 @@ namespace VNCreator
                 }
                 else if (targetObject is System.Collections.IList list)
                 {
+                    var test = (Regex.Match(field, @"\d{1,4}"));
+                    var tt = test.Value;
+                    
                     var dataIndex = int.Parse(Regex.Match(field, @"\d{1,4}").Value);
 
                     return (new ListInfo(), new Tuple<System.Collections.IList, int>(list, dataIndex));
