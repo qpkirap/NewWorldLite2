@@ -19,7 +19,7 @@ namespace VNCreator
             
             editorCache.SetSubEntityState(true);
 
-            this.Container = container.GetValue(fieldName);
+            Container = container.GetValue(fieldName);
             
             editorCache.Init(fieldName, Container);
 

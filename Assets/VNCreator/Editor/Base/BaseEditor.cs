@@ -17,7 +17,7 @@ namespace VNCreator
         public object Entity => entity;
         public object Container => container;
 
-        public void Init(string fieldName, object container)
+        public virtual void Init(string fieldName, object container)
         {
             var entity = container?.GetValue<object>(fieldName);
 
@@ -38,7 +38,6 @@ namespace VNCreator
         {
             this.data = data;
         }
-
 
         public virtual void DrawEditor()
         {

@@ -176,12 +176,20 @@ namespace VNCreator
                 }
                 else if (targetObject is System.Collections.IList list)
                 {
-                    var test = (Regex.Match(field, @"\d{1,4}"));
-                    var tt = test.Value;
+                    var listType = targetObject.GetType();
                     
-                    var dataIndex = int.Parse(Regex.Match(field, @"\d{1,4}").Value);
-
-                    return (new ListInfo(), new Tuple<System.Collections.IList, int>(list, dataIndex));
+                    var findIndexMethod = listType.GetMethod("FindIndex", new[] { typeof(Predicate<object>) });
+                    
+                    if (findIndexMethod != null)
+                    {
+                        Predicate<object> predicate = x => x.Equals(targetObject);
+                        
+                        object[] args = { predicate };
+                        
+                        var index = (int)findIndexMethod.Invoke(list, args);
+                        
+                        return (new ListInfo(), new Tuple<System.Collections.IList, int>(list, index));
+                    }
                 }
                 else
                 {
@@ -437,7 +445,7 @@ namespace VNCreator
         private static object GetListValue(object memberObj)
         {
             return memberObj is Tuple<System.Collections.IList, int> data
-                ? data.Item1[data.Item2]
+                ? data.Item2 > 0 ? data.Item1[data.Item2] : default
                 : default;
         }
 
@@ -445,7 +453,12 @@ namespace VNCreator
         {
             if (memberObj is Tuple<System.Collections.IList, int> data)
             {
-                data.Item1[data.Item2] = value;
+                if (data.Item1.Count == 0)
+                {
+                    data.Item1.Add(value);
+                }
+                
+                data.Item1[data.Item2 < 0 ? 0 : data.Item2] = value;
             }
         }
 
