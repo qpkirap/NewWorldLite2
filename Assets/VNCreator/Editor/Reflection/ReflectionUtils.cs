@@ -453,12 +453,14 @@ namespace VNCreator
         {
             if (memberObj is Tuple<System.Collections.IList, int> data)
             {
-                if (data.Item1.Count == 0)
+                if (data.Item2 < 0)
                 {
                     data.Item1.Add(value);
+                    
+                    return;
                 }
                 
-                data.Item1[data.Item2 < 0 ? 0 : data.Item2] = value;
+                data.Item1[data.Item2] = value;
             }
         }
 

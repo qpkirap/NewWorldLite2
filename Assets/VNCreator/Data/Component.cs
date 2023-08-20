@@ -7,7 +7,7 @@ namespace VNCreator
             var newComponent = base.Clone() as Component;
 
             newComponent.RemoveCloneSuffix();
-
+            
             return newComponent;
         }
     }

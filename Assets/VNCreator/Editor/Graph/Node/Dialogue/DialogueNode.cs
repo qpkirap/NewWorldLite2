@@ -29,6 +29,13 @@ namespace VNCreator
             : base(fieldName, container, entityCache)
         {
             visuals = new DialogueNodeViewer(this);
+
+            // if (EntityCache != null)
+            // {
+            //     var list = (List<DialogueNodeData>)container.GetValue("nodes");
+            //     
+            //     list.Add(EntityCache);
+            // }
         }
     }
 

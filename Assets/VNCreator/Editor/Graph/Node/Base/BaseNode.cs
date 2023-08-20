@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System.Collections.Generic;
 using UnityEngine;
 using Node = UnityEditor.Experimental.GraphView.Node;
 
@@ -11,7 +12,6 @@ namespace VNCreator
         protected BaseEntityEditor editorCache;
         
         public T EntityCache { get; }
-        protected object Container;
         
         protected BaseNode(string fieldName, object container, T entityCache = null) : base(fieldName, container)
         {
@@ -19,27 +19,33 @@ namespace VNCreator
             
             editorCache.SetSubEntityState(true);
 
-            Container = container.GetValue(fieldName);
-            
-            editorCache.Init(fieldName, Container);
-
             EntityCache = entityCache;
+
+            if (EntityCache == null)
+            {
+                EntityCache = (T)editorCache.InstantiateEntity(container);
+
+                var target = container.GetValue(fieldName);
+                
+                target.SetValue("values", EntityCache);
+            }
             
-            EntityCache ??= (T)editorCache.CreateTo(fieldName, Container);
+            editorCache.Init(EntityCache, Container);
         }
 
         public override void OnDelete()
         {
-            Debug.Log("УДАЛЯТЬ");
+            GetEditor().RemoveEntity();
             
-            editorCache.RemoveEntity();
+            
             
             base.OnDelete();
         }
 
-        public override BaseEntityEditor GetEditor()
+        protected override BaseEntityEditor GetEditor()
         {
             if (editorCache != null) return editorCache;
+            
             else editorCache ??= EditorCache.GetEditor(typeof(T));
 
             return editorCache;
@@ -62,9 +68,9 @@ namespace VNCreator
             GetEditor()?.Init(fieldName, container);
         }
 
-        public abstract BaseEntityEditor GetEditor();
-        public abstract string Guid { get; }
+        protected abstract BaseEntityEditor GetEditor();
         public abstract NodeType NodeType { get; }
+        public abstract string Guid { get; }
 
         public virtual void OnDelete()
         {
