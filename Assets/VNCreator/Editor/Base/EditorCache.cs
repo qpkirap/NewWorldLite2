@@ -7,8 +7,6 @@ namespace VNCreator
     //TODO нужно разделить Editor и Runtime
     public static class EditorCache
     {
-        private static readonly Dictionary<Type, BaseEntityEditor> EditorsCache = new();
-
         public static void Init()
         {
         }
@@ -16,19 +14,12 @@ namespace VNCreator
         public static BaseEntityEditor GetEditor(Type type)
         {
             if (type == null) return null;
-
-            if (EditorsCache.TryGetValue(type, out var editorC))
-            {
-                if (editorC != null) return editorC;
-            }
             
             var factory = CreateFactory(type);
 
             if (factory == null) return null;
 
             var editor = (BaseEntityEditor)factory.CreateEditor(type);
-
-            EditorsCache.TryAdd(type, editor);
 
             return editor;
         }
