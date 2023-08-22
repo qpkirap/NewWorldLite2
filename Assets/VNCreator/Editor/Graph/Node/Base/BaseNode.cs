@@ -1,7 +1,5 @@
 #if UNITY_EDITOR
 
-using System.Collections.Generic;
-using UnityEngine;
 using Node = UnityEditor.Experimental.GraphView.Node;
 
 namespace VNCreator
