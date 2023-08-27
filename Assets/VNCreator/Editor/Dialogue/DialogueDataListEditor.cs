@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace VNCreator
 {
-    [StoryObjectEditor(typeof(DialogueNodeData), typeof(DialogueDataEditor))]
-    public class DialogueDataEditor : BaseEntityEditor<DialogueNodeData>
+    [StoryObjectEditor(typeof(DialogueNodeData), typeof(DialogueDataListEditor))]
+    public class DialogueDataListEditor : ListComponentEntitiesEditor<DialogueNodeData>
     {
         protected override string GetDataPath(ScriptableObject entity)
         {

@@ -32,7 +32,7 @@ namespace VNCreator
                 return editorC;
             }
 
-            var editor = EditorCache.GetEditor(type);
+            var editor = EditorCache.GetComponentEditor(type);
 
             if (editor == null) return null;
 

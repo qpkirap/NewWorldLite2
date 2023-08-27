@@ -11,7 +11,7 @@ namespace VNCreator
         {
         }
         
-        public static BaseEntityEditor GetEditor(Type type)
+        public static IComponentEntityEditor<Component> GetComponentEditor(Type type)
         {
             if (type == null) return null;
             
@@ -19,7 +19,7 @@ namespace VNCreator
 
             if (factory == null) return null;
 
-            var editor = (BaseEntityEditor)factory.CreateEditor(type);
+            var editor = (IComponentEntityEditor<Component>)factory.CreateEditor(type);
 
             return editor;
         }

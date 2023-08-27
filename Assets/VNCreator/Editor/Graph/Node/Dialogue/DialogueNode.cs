@@ -18,7 +18,7 @@ using UnityEngine.AddressableAssets;
 namespace VNCreator
 {
 #if UNITY_EDITOR
-    public class DialogueNode : BaseNode<DialogueNodeData>
+    public class DialogueNode : BaseNode<DialogueNodeData, DialogueDataListEditor>
     {
         public DialogueNodeViewer visuals;
 

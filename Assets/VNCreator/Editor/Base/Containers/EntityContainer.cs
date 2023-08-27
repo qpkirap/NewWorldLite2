@@ -19,7 +19,7 @@ namespace VNCreator
 
             entity = (T)this.container.GetValue(this.fieldName);
 
-            entityEditor = EditorCache.GetEditor(typeof(T));
+            entityEditor = EditorCache.GetComponentEditor(typeof(T));
             
             entityEditor.SetSubEntityState(true);
         }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace VNCreator
 {
-    public class ListEntitiesContainer<T> where T : Component
+    public class EntitiesListContainer<T> where T : Component
     {
         protected readonly string fieldName;
         protected readonly object container;
@@ -12,7 +12,7 @@ namespace VNCreator
         protected BaseEntityEditor entityEditor { get; private set; }
         protected Component lastSelect { get; private set; }
 
-        public ListEntitiesContainer(string fieldName, object container)
+        public EntitiesListContainer(string fieldName, object container)
         {
             if (string.IsNullOrEmpty(fieldName) || container == null) return;
 
@@ -23,7 +23,7 @@ namespace VNCreator
 
             if (list != null) entities = list;
             
-            entityEditor = EditorCache.GetEditor(typeof(T));
+            entityEditor = EditorCache.GetComponentEditor(typeof(T));
             
             entityEditor.SetSubEntityState(true);
         }

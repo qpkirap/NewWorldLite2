@@ -4,49 +4,34 @@ using Node = UnityEditor.Experimental.GraphView.Node;
 
 namespace VNCreator
 {
-    public abstract class BaseNode<T> : BaseNode 
-        where T : Component
+    public abstract class BaseNode<TComponent, TEditor> : BaseNode 
+        where TComponent : Component
+        where TEditor : IComponentEntityEditor<TComponent>
     {
-        protected BaseEntityEditor editorCache;
+        private readonly TEditor editorCache;
         
-        public T EntityCache { get; }
+        public TComponent EntityCache { get; }
         
-        protected BaseNode(string fieldName, object container, T entityCache = null) : base(fieldName, container)
+        protected BaseNode(string fieldName, object container, TComponent entityCache = null) : base(fieldName, container)
         {
-            editorCache = EditorCache.GetEditor(typeof(T));
+            this.EntityCache = entityCache;
+            this.editorCache = (TEditor)EditorCache.GetComponentEditor(typeof(TEditor));
             
-            editorCache.SetSubEntityState(true);
+            this.editorCache.InitContainer(fieldName, container);
 
-            EntityCache = entityCache;
-
-            if (EntityCache == null)
-            {
-                EntityCache = (T)editorCache.InstantiateEntity(container);
-
-                var target = container.GetValue(fieldName);
-                
-                target.SetValue("values", EntityCache);
-            }
-            
-            editorCache.Init(EntityCache, Container);
+            EntityCache ??= editorCache.CreateItem();
         }
 
         public override void OnDelete()
         {
-            GetEditor().RemoveEntity();
-            
-            
-            
-            base.OnDelete();
+            editorCache.OnDelete(EntityCache);
         }
 
-        protected override BaseEntityEditor GetEditor()
+        public override void OnSelected()
         {
-            if (editorCache != null) return editorCache;
+            editorCache.OnSelectItem(EntityCache);
             
-            else editorCache ??= EditorCache.GetEditor(typeof(T));
-
-            return editorCache;
+            base.OnSelected();
         }
     }
     
@@ -56,23 +41,12 @@ namespace VNCreator
         
         public BaseNode(string fieldName, object container)
         {
-            this.Container = container;
-            
-            Init(fieldName, container);
         }
-
-        private void Init(string fieldName, object container)
-        {
-            GetEditor()?.Init(fieldName, container);
-        }
-
-        protected abstract BaseEntityEditor GetEditor();
+        
         public abstract NodeType NodeType { get; }
         public abstract string Guid { get; }
 
-        public virtual void OnDelete()
-        {
-        }
+        public abstract void OnDelete();
     }
 }
 
