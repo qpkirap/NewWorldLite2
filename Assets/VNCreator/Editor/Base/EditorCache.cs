@@ -11,15 +11,13 @@ namespace VNCreator
         {
         }
         
-        public static IComponentEntityEditor<Component> GetComponentEditor(Type type)
+        public static IComponentEntityEditor<T> GetComponentEditor<T>() where T : Component
         {
-            if (type == null) return null;
+            var type = typeof(T);
             
             var factory = CreateFactory(type);
 
-            if (factory == null) return null;
-
-            var editor = (IComponentEntityEditor<Component>)factory.CreateEditor(type);
+            var editor = (IComponentEntityEditor<T>)factory?.CreateEditor(type);
 
             return editor;
         }

@@ -12,8 +12,8 @@ namespace VNCreator
 
         public T CreateItem() => entityContainer.CreateItem();
         
-        public void OnSelectItem(Component component) => entityContainer.OnSelectItem(component);
+        public void OnSelectItem(T component) => entityContainer.OnSelectItem(component);
         
-        public void OnDelete(Component component) => entityContainer.OnDelete(component);
+        public void OnDelete(T component) => entityContainer.OnDelete(component);
     }
 }

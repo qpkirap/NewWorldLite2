@@ -23,7 +23,7 @@ namespace VNCreator
 
             if (list != null) entities = list;
             
-            entityEditor = EditorCache.GetComponentEditor(typeof(T));
+            var entityEditor = EditorCache.GetComponentEditor<T>();
             
             entityEditor.SetSubEntityState(true);
         }

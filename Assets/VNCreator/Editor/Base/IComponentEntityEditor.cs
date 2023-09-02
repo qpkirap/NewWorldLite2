@@ -1,14 +1,14 @@
 namespace VNCreator
 {
-    public interface IComponentEntityEditor<out T> 
+    public interface IComponentEntityEditor<T> : ICustomEditor
         where T : Component
     {
         void InitContainer(string fieldName, object container);
         
         public T CreateItem();
 
-        public void OnSelectItem(Component component);
+        public void OnSelectItem(T component);
         
-        public void OnDelete(Component component);
+        public void OnDelete(T component);
     }
 }

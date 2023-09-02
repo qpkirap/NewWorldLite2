@@ -13,8 +13,8 @@ namespace VNCreator
         
         public T CreateItem() => listContainer.CreateItem();
         
-        public void OnSelectItem(Component component) => listContainer.OnSelectItem(component);
+        public void OnSelectItem(T component) => listContainer.OnSelectItem(component);
         
-        public void OnDelete(Component component) => listContainer.OnDelete(component);
+        public void OnDelete(T component) => listContainer.OnDelete(component);
     }
 }
