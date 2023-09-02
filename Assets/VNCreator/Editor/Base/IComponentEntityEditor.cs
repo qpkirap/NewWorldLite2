@@ -1,7 +1,6 @@
 namespace VNCreator
 {
-    public interface IComponentEntityEditor<T> : ICustomEditor
-        where T : Component
+    public interface IComponentEntityEditor<T> where T : Component
     {
         void InitContainer(string fieldName, object container);
         

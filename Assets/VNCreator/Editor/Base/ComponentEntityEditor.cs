@@ -1,11 +1,11 @@
 namespace VNCreator
 {
-    public class ComponentEntityEditor<T> : BaseEntityEditor, IComponentEntityEditor<T>
+    public class ComponentEntityEditor<T> : IComponentEntityEditor<T>
         where T : Component
     {
-        private EntityContainer<T> entityContainer;
+        protected EntityContainer<T> entityContainer;
 
-        public void InitContainer(string fieldName, object container)
+        public virtual void InitContainer(string fieldName, object container)
         {
             entityContainer = new(fieldName, container);
         }

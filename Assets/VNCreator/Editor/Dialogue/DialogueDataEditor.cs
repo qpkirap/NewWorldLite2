@@ -2,8 +2,8 @@
 
 namespace VNCreator
 {
-    [StoryObjectEditor(typeof(DialogueNodeData), typeof(DialogueDataListEditor))]
-    public class DialogueDataListEditor : ListComponentEntitiesEditor<DialogueNodeData>
+    [StoryObjectEditor(typeof(DialogueNodeData), typeof(DialogueComponentContainerEditor))]
+    public class DialogueDataEditor : BaseEntityEditor<DialogueNodeData>
     {
         protected override string GetDataPath(ScriptableObject entity)
         {

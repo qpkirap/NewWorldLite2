@@ -1,11 +1,10 @@
 namespace VNCreator
 {
-    public class ListComponentEntitiesEditor<T> : BaseEntityEditor, IComponentEntityEditor<T>
+    public class ListComponentEntitiesEditor<T> : IComponentEntityEditor<T>
         where T : Component
     {
         private EntitiesListContainer<T> listContainer;
         
-
         public void InitContainer(string fieldName, object container)
         {
             listContainer = new(fieldName, container);

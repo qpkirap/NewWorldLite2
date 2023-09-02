@@ -4,18 +4,18 @@ using Node = UnityEditor.Experimental.GraphView.Node;
 
 namespace VNCreator
 {
-    public abstract class BaseNode<TComponent, TEditor> : BaseNode 
+    public abstract class BaseNode<TComponent, TContainer> : BaseNode 
         where TComponent : Component
-        where TEditor : IComponentEntityEditor<TComponent>
+        where TContainer : IComponentEntityEditor<TComponent>
     {
-        private readonly TEditor editorCache;
+        private readonly TContainer editorCache;
         
         public TComponent EntityCache { get; }
         
         protected BaseNode(string fieldName, object container, TComponent entityCache = null) : base(fieldName, container)
         {
             this.EntityCache = entityCache;
-            this.editorCache = (TEditor)EditorCache.GetComponentEditor(typeof(TEditor));
+            this.editorCache = (TContainer)EditorCache.GetComponentEntityEditor<TComponent>();
             
             this.editorCache.InitContainer(fieldName, container);
 
