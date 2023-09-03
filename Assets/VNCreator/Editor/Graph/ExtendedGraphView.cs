@@ -48,7 +48,7 @@ namespace VNCreator.Editors.Graph
 
         public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
         {
-            var actionNode = new ActionNode(commandData, Container);
+            var actionNode = new CommandNode(commandData, Container);
             
             actionNode.title = "Action";
             

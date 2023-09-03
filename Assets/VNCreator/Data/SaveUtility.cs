@@ -25,7 +25,7 @@ namespace VNCreator
                 {
                     case NodeType.Action:
                     {
-                        var action = (ActionNode)graphNode;
+                        var action = (CommandNode)graphNode;
 
                         _story.commandDatas.Add(action.EntityCache);
                     }

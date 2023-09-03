@@ -5,14 +5,14 @@ using UnityEngine.UIElements;
 
 namespace VNCreator
 {
-    public class ActionNode : BaseNode<CommandData>
+    public class CommandNode : BaseNode<CommandData, CommandDataComponentContainerEditor>
     {
         public ActionNodeViewer visuals;
 
         public override string Guid => EntityCache.Id;
         public override NodeType NodeType => NodeType.Action;
         
-        public ActionNode(CommandData commandData, StoryObject container) : base(StoryObject.CommandDataKey, container)
+        public CommandNode(CommandData commandData, StoryObject container) : base(StoryObject.CommandDataKey, container)
         {
             visuals = new(this);
         }
@@ -20,9 +20,9 @@ namespace VNCreator
 
     public class ActionNodeViewer : VisualElement
     {
-        private ActionNode node;
+        private CommandNode node;
         
-        public ActionNodeViewer(ActionNode node)
+        public ActionNodeViewer(CommandNode node)
         {
             this.node = node;
 

@@ -55,12 +55,12 @@ namespace VNCreator
         
         private void CreateEditorCache()
         {
-           editorAttributeCache = new();
+            editorAttributeCache = new();
 
             var entityType = typeof(TEntity);
 
             var entityEditors = ReflectionUtils
-                .FindChildTypesOf<ICustomEditor>()
+                .FindChildTypesOf<IComponentEntityEditor<TEntity>>()
                 .Where(x =>
                 {
                     return x.HasAttribute<TEditorAttr>()
@@ -92,9 +92,9 @@ namespace VNCreator
 
             if (editorAttributeCache.TryGetValue(entityType.Name, out var editorAttr))
             {
-                if (editorAttr.editorType.IsSubclassOf(typeof(IComponentEntityEditor<TEntity>)))
+                if (editorAttr.editorType.IsSubclassOf(typeof(ComponentEntityEditor<TEntity>)))
                 {
-                    editor = editorAttr.editorType.CreateByType<IComponentEntityEditor<TEntity>>();
+                    editor = editorAttr.editorType.CreateByType<ComponentEntityEditor<TEntity>>();
                 }
 
                 return true;

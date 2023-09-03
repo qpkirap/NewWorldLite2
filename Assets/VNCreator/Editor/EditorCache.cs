@@ -19,7 +19,7 @@ namespace VNCreator
             
             if (factory == null) return null;
             
-            var editor = (IComponentEntityEditor<T>)factory.CreateEditor(type);
+            var editor = factory.CreateEditor(type);
             
             return editor;
         }
