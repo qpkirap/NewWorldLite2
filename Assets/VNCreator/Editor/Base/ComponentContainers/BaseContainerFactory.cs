@@ -6,7 +6,7 @@ using UnityEngine;
 namespace VNCreator
 {
     public abstract class BaseContainerFactory<TEntity, TEditorAttr> : IContainerFactory<TEntity> 
-        where TEditorAttr : BaseEditorAttribute
+        where TEditorAttr : ComponentContainerAttribute
         where TEntity : Component
     {
         protected Dictionary<string, TEditorAttr> editorAttributeCache;
@@ -92,9 +92,11 @@ namespace VNCreator
 
             if (editorAttributeCache.TryGetValue(entityType.Name, out var editorAttr))
             {
-                if (editorAttr.editorType.IsSubclassOf(typeof(ComponentEntityEditor<TEntity>)))
+                var containerType = typeof(IComponentEntityEditor<TEntity>);
+                
+                if (containerType.IsAssignableFrom(editorAttr.editorType))
                 {
-                    editor = editorAttr.editorType.CreateByType<ComponentEntityEditor<TEntity>>();
+                    editor = editorAttr.editorType.CreateByType<IComponentEntityEditor<TEntity>>();
                 }
 
                 return true;

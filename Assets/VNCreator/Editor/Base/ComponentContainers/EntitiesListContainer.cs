@@ -23,7 +23,7 @@ namespace VNCreator
 
             if (list != null) entities = list;
             
-            var entityEditor = EditorCache.GetEditor<T>();
+            entityEditor = EditorCache.GetEditor<T>();
             
             entityEditor.SetSubEntityState(true);
         }
@@ -44,7 +44,8 @@ namespace VNCreator
 
         public virtual void OnDelete(Component component)
         {
-            if (component == null) return;
+            if (component == null || lastSelect == null
+                || !lastSelect.Id.Equals(component.Id)) return;
             
             var item = entities.FirstOrDefault(x => x == component);
 
