@@ -14,18 +14,12 @@ namespace VNCreator
         public const string DialogueNodeDataKeys = nameof(nodes);
         public const string linkDataKeys = nameof(links);
         
-        public void SetLists(List<DialogueNodeData> _nodes, List<Link> _links)
+        public void SetLists(List<Link> _links)
         {
             links = new List<Link>();
             for (int i = 0; i < _links.Count; i++)
             {
                 links.Add(_links[i]);
-            }
-
-            nodes = new List<DialogueNodeData>();
-            for (int i = 0; i < _nodes.Count; i++)
-            {
-                nodes.Add(_nodes[i]);
             }
         }
 

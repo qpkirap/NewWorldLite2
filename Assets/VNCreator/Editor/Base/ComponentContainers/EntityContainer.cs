@@ -40,12 +40,17 @@ namespace VNCreator
             return item;
         }
 
-        public virtual void OnSelectItem(Component component)
+        public virtual void OnSelectItem(T component)
         {
-            IsSelect = component == entity;
+            IsSelect = component.Id.Equals(entity.Id);
+        }
+        
+        public virtual void OnUnselected()
+        {
+            IsSelect = false;
         }
 
-        public virtual void OnDelete(Component component)
+        public virtual void OnDelete(T component)
         {
             if (entity != null && entity == component)
             {

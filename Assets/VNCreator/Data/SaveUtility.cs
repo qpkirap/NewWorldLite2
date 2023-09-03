@@ -12,9 +12,9 @@ namespace VNCreator
     public class SaveUtility
     {
 #if UNITY_EDITOR
-        public void SaveGraph(StoryObject _story, ExtendedGraphView graph)
+        public void SaveGraph(StoryObject story, ExtendedGraphView graph)
         {
-            EditorUtility.SetDirty(_story);
+            EditorUtility.SetDirty(story);
 
             List<DialogueNodeData> nodes = new List<DialogueNodeData>();
             List<Link> links = new List<Link>();
@@ -26,21 +26,20 @@ namespace VNCreator
                     case NodeType.Action:
                     {
                         var action = (CommandNode)graphNode;
-
-                        _story.commandDatas.Add(action.EntityCache);
                     }
                         break;
                     case NodeType.Dialogue:
                     {
                         var dialogue = (DialogueNode)graphNode;
                         
-                        _story.nodes.SetValue(StoryObject.DialogueNodeDataKeys, dialogue);
+                        dialogue.EntityCache.SetValue("nodePosition", dialogue.GetPosition());
                     }
                         break;
                 }
             }
 
             var edges = graph.edges.ToList();
+            
             for (int i = 0; i < edges.Count; i++)
             {
                 var _output = (BaseNode)edges[i].output.node;
@@ -54,9 +53,9 @@ namespace VNCreator
                 });
             }
 
-            _story.SetLists(nodes, links);
+            story.SetLists(links);
             
-            EditorUtility.SetDirty(_story);
+            EditorUtility.SetDirty(story);
 
             //_story.nodes = nodes;
             //_story.links = links;

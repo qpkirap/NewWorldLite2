@@ -7,6 +7,7 @@ namespace VNCreator
         public T CreateItem();
 
         public void OnSelectItem(T component);
+        public void OnUnselected();
         
         public void OnDelete(T component);
     }

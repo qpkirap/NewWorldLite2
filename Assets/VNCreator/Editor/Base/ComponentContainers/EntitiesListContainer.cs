@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace VNCreator
 {
@@ -10,7 +11,7 @@ namespace VNCreator
 
         protected readonly List<T> entities;
         protected BaseEntityEditor entityEditor { get; private set; }
-        protected Component lastSelect { get; private set; }
+        protected T lastSelect { get; private set; }
 
         public EntitiesListContainer(string fieldName, object container)
         {
@@ -37,9 +38,18 @@ namespace VNCreator
             return item;
         }
 
-        public virtual void OnSelectItem(Component component)
+        public virtual void OnSelectItem(T component)
         {
+            Debug.Log($"Selected: {component.Id}");
+            
             lastSelect = component;
+        }
+
+        public virtual void OnUnselected()
+        {
+            Debug.Log($"Unselected: {lastSelect?.Id}");
+            
+            lastSelect = null;
         }
 
         public virtual void OnDelete(Component component)

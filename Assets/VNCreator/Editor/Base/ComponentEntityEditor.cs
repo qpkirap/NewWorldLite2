@@ -13,7 +13,7 @@ namespace VNCreator
         public T CreateItem() => entityContainer.CreateItem();
         
         public void OnSelectItem(T component) => entityContainer.OnSelectItem(component);
-        
+        public void OnUnselected() => entityContainer.OnUnselected();
         public void OnDelete(T component) => entityContainer.OnDelete(component);
     }
 }

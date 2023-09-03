@@ -33,6 +33,13 @@ namespace VNCreator
             
             base.OnSelected();
         }
+
+        public override void OnUnselected()
+        {
+            editorCache.OnUnselected();
+            
+            base.OnUnselected();
+        }
     }
     
     public abstract class BaseNode : Node
