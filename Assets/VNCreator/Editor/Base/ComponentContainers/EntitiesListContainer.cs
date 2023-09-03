@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace VNCreator
 {
     public class EntitiesListContainer<T> where T : Component
     {
+        protected static BaseEntityEditor entityEditor { get; private set; }
+        protected static List<T> entities;
+        protected static List<T> selectedItems = new();
+        
         protected readonly string fieldName;
         protected readonly object container;
-
-        protected readonly List<T> entities;
-        protected BaseEntityEditor entityEditor { get; private set; }
-        protected T lastSelect { get; private set; }
 
         public EntitiesListContainer(string fieldName, object container)
         {
@@ -24,7 +23,7 @@ namespace VNCreator
 
             if (list != null) entities = list;
             
-            entityEditor = EditorCache.GetEditor<T>();
+            entityEditor ??= EditorCache.GetEditor<T>();
             
             entityEditor.SetSubEntityState(true);
         }
@@ -42,33 +41,33 @@ namespace VNCreator
         {
             Debug.Log($"Selected: {component.Id}");
             
-            lastSelect = component;
+            selectedItems.Add(component);
         }
 
-        public virtual void OnUnselected()
+        public virtual void OnUnselected(T component)
         {
-            Debug.Log($"Unselected: {lastSelect?.Id}");
-            
-            lastSelect = null;
+            selectedItems.Remove(component);
         }
 
-        public virtual void OnDelete(Component component)
+        public virtual void OnDelete(T component)
         {
-            if (component == null || lastSelect == null
-                || !lastSelect.Id.Equals(component.Id)) return;
-            
-            var item = entities.FirstOrDefault(x => x == component);
-
-            if (item != null)
+            for (var i = 0; i < selectedItems.Count; i++)
             {
-                entityEditor.Init(item, container);
+                var item = selectedItems[i];
                 
-                entityEditor.RemoveEntity();
+                if (item != null)
+                {
+                    entityEditor.Init(item, container);
+                
+                    entityEditor.RemoveEntity();
 
-                entities.Remove(item);
-
-                entities.RemoveAll(x => x == null);
+                    entities.Remove(item);
+                }
             }
+            
+            entities.RemoveAll(x => x == null);
+            
+            selectedItems.Clear();
         }
     }
 }

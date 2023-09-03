@@ -36,7 +36,7 @@ namespace VNCreator
 
         public override void OnUnselected()
         {
-            editorCache.OnUnselected();
+            editorCache.OnUnselected(EntityCache);
             
             base.OnUnselected();
         }
@@ -52,7 +52,6 @@ namespace VNCreator
         
         public abstract NodeType NodeType { get; }
         public abstract string Guid { get; }
-
         public abstract void OnDelete();
     }
 }

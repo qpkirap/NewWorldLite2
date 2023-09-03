@@ -5,10 +5,8 @@ namespace VNCreator
         void InitContainer(string fieldName, object container);
         
         public T CreateItem();
-
-        public void OnSelectItem(T component);
-        public void OnUnselected();
-        
-        public void OnDelete(T component);
+        void OnSelectItem(T component);
+        void OnUnselected(T component);
+        void OnDelete(T component);
     }
 }

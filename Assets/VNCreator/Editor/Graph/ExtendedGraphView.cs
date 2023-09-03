@@ -32,17 +32,21 @@ namespace VNCreator.Editors.Graph
 
             this.deleteSelection += (operationName, user) =>
             {
+                var deletedNodes = new List<BaseNode>();
+                
                 foreach (var baseNode in allNodes.ToList())
                 {
-                    if (baseNode.IsSelectable())
+                    if (baseNode.selected)
                     {
                         baseNode.OnDelete();
                         
-                        DeleteSelection();
-
-                        allNodes.Remove(baseNode);
+                        deletedNodes.Add(baseNode);
                     }
                 }
+                
+                DeleteSelection();
+                
+                allNodes.RemoveAll(node => deletedNodes.Contains(node));
             };
         }
 

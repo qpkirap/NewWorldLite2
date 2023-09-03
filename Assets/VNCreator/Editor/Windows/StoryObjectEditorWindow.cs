@@ -11,7 +11,7 @@ namespace VNCreator.Editors
         private StoryObject storyObj;
         
         ExtendedGraphView graphView;
-        SaveUtility save = new SaveUtility();
+        private static SaveUtility save = new SaveUtility();
 
         private Vector2 mousePosition = new Vector2();
 
@@ -24,6 +24,13 @@ namespace VNCreator.Editors
             window.CreateGraphView(_storyObj.nodes == null ? 0 : 1);
             
             EditorCache.Init();
+        }
+
+        public override void CloseEditor()
+        {
+            base.CloseEditor();
+            
+            save.SaveGraph(storyObj, graphView);
         }
 
         private void ShowContextMenu(KeyDownEvent keyEvent)

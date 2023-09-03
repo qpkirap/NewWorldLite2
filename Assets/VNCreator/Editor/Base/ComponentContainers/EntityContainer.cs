@@ -45,7 +45,7 @@ namespace VNCreator
             IsSelect = component.Id.Equals(entity.Id);
         }
         
-        public virtual void OnUnselected()
+        public virtual void OnUnselected(T component)
         {
             IsSelect = false;
         }
