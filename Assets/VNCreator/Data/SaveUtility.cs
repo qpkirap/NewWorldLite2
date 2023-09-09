@@ -61,15 +61,23 @@ namespace VNCreator
             //_story.links = links;
         }
 
-        public void LoadGraph(StoryObject _story, ExtendedGraphView _graph)
+        public void LoadGraph(StoryObject story, ExtendedGraphView graph)
         {
-            foreach (DialogueNodeData _data in _story.nodes)
+            foreach (var data in story.nodes)
             {
-                DialogueNode _tempNode = _graph.CreateDialogueNode("", _data.NodePosition.position, _data.Choices, _data.ChoiceOptions.ToList(), _data.StartNode, _data.EndNode, _data);
-                _graph.AddElement(_tempNode);
+                var tempNode = graph.CreateDialogueNode("", data.NodePosition.position, data.Choices, data.ChoiceOptions.ToList(), data.StartNode, data.EndNode, data);
+                
+                graph.AddElement(tempNode);
+            }
+            
+            foreach (var command in story.commandDatas)
+            {
+                var commandNode = graph.GenerateActionNode(command.NodePosition.position, command.IsStartNode, command.IsEndNode, command);
+                
+                graph.Add(commandNode);
             }
 
-            GenerateLinks(_story, _graph);
+            GenerateLinks(story, graph);
         }
 
         void GenerateLinks(StoryObject _story, ExtendedGraphView _graph)

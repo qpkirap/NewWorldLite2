@@ -39,6 +39,7 @@ namespace VNCreator.Editors
             
             mousePosition = Event.current.mousePosition;
             GenericMenu _menu = new GenericMenu();
+            _menu.AddItem(new GUIContent("Add Actions"), false, () => graphView.GenerateActionNode(mousePosition, false, false, null));
             _menu.AddItem(new GUIContent("Add Node"), false, () => graphView.GenerateDialogueNode("", mousePosition, 1, false, false));
             _menu.AddItem(new GUIContent("Add Node (2 Choices)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 2, false, false));
             _menu.AddItem(new GUIContent("Add Node (3 Choices)"), false, () => graphView.GenerateDialogueNode("", mousePosition, 3, false, false));

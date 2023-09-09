@@ -62,37 +62,6 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   characterSprList: []
   backgroundSprList: []
---- !u!114 &-7983612957241146328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 60b9a2df7150549458916594b8521884
-  title: 
-  characterName: 
-  dialogueText: 
-  startNode: 0
-  endNode: 0
-  choices: 1
-  choiceOptions:
-  - 
-  nodePosition:
-    serializedVersion: 2
-    x: -652.00006
-    y: 240.80003
-    width: 499.20004
-    height: 389.60004
-  soundEffect: {fileID: 0}
-  backgroundMusic: {fileID: 0}
-  characterSprList: []
-  backgroundSprList: []
 --- !u!114 &-7839574631193745346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -327,6 +296,14 @@ MonoBehaviour:
   id: 45f63ae810d74c94b95e2fd88f268621
   title: 
   commandActions: []
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  isEndNode: 0
+  isStartNode: 0
 --- !u!114 &-5209620933415250539
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -353,6 +330,37 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
+  soundEffect: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  characterSprList: []
+  backgroundSprList: []
+--- !u!114 &-5144056470620532457
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: a2c25db4ce913ee4b9598228e3f7a131
+  title: 
+  characterName: 
+  dialogueText: 
+  startNode: 0
+  endNode: 0
+  choices: 1
+  choiceOptions:
+  - 
+  nodePosition:
+    serializedVersion: 2
+    x: 746.4001
+    y: 160.80002
+    width: 499.2
+    height: 389.60004
   soundEffect: {fileID: 0}
   backgroundMusic: {fileID: 0}
   characterSprList: []
@@ -510,37 +518,6 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   characterSprList: []
   backgroundSprList: []
---- !u!114 &-375455336791625987
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 02be2027acdfd9f45a780c1a42c3d4b9
-  title: 
-  characterName: 
-  dialogueText: 
-  startNode: 0
-  endNode: 0
-  choices: 1
-  choiceOptions:
-  - 
-  nodePosition:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 499.20004
-    height: 389.60004
-  soundEffect: {fileID: 0}
-  backgroundMusic: {fileID: 0}
-  characterSprList: []
-  backgroundSprList: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,9 +533,7 @@ MonoBehaviour:
   configFolder: {fileID: 102900000, guid: 6ea315d0fd7389c41b19996891e99ae3, type: 3}
   links: []
   nodes:
-  - {fileID: -375455336791625987}
-  - {fileID: 1377703880901326800}
-  - {fileID: -7983612957241146328}
+  - {fileID: -5144056470620532457}
   commandDatas: []
 --- !u!114 &18701796619799512
 MonoBehaviour:
@@ -575,7 +550,15 @@ MonoBehaviour:
   id: ae260910c2c893a4ca68748e752ed604
   title: 
   commandActions: []
---- !u!114 &1377703880901326800
+  nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  isEndNode: 0
+  isStartNode: 0
+--- !u!114 &783083652966946958
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -587,7 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c55191d2fa8ae7438422d2ceb4bd81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 20a17b3b27eca76458ce840ca35ebc2b
+  id: 0dd1cf1230442f34ab4aa4fe04ad9065
   title: 
   characterName: 
   dialogueText: 

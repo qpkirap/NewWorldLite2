@@ -50,7 +50,7 @@ namespace VNCreator.Editors.Graph
             };
         }
 
-        public void GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
+        public CommandNode GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
         {
             var actionNode = new CommandNode(commandData, Container);
             
@@ -71,6 +71,8 @@ namespace VNCreator.Editors.Graph
                 _outputPort.portName = "Next";
                 actionNode.outputContainer.Add(_outputPort);
             }
+
+            return actionNode;
         }
 
         public void GenerateDialogueNode(string _nodeName, Vector2 _mousePos, int choiceAmount, bool _startNode, bool _endNode)
