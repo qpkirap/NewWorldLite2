@@ -50,13 +50,13 @@ namespace VNCreator.Editors.Graph
             };
         }
 
-        public CommandNode GenerateActionNode(Vector2 _mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
+        public CommandNode GenerateActionNode(Vector2 mousePos, bool _startNode, bool _endNode, CommandData commandData = null)
         {
             var actionNode = new CommandNode(commandData, Container);
             
             actionNode.title = "Action";
             
-            actionNode.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (_mousePos * (1 / scale)), Vector2.one));
+            actionNode.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (mousePos * (1 / scale)), Vector2.one));
             
             if (!_startNode)
             {
@@ -71,6 +71,15 @@ namespace VNCreator.Editors.Graph
                 _outputPort.portName = "Next";
                 actionNode.outputContainer.Add(_outputPort);
             }
+            
+            actionNode.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (mousePos * (1/scale)), Vector2.one));
+
+            actionNode.mainContainer.Add(actionNode.visuals);
+
+            actionNode.RefreshExpandedState();
+            actionNode.RefreshPorts();
+            
+            allNodes.Add(actionNode);
 
             return actionNode;
         }
