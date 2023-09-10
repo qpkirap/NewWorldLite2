@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 187px; width: 349px; align-items: stretch; align-self: auto; justify-content: flex-start; flex-direction: column; flex-wrap: nowrap;">
+    <ui:VisualElement focusable="false" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: auto; width: auto; align-items: stretch; align-self: auto; justify-content: flex-start; flex-direction: column; flex-wrap: nowrap; flex-shrink: 1; -unity-background-scale-mode: scale-and-crop; min-width: auto; min-height: auto; margin-top: auto; margin-right: auto; margin-bottom: auto; margin-left: auto; transform-origin: center;">
         <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="DropdownAction" />
         <ui:Button text="Button" display-tooltip-when-elided="true" name="AddButton" style="-unity-text-align: middle-right;" />
+        <ui:ListView focusable="true" name="ActionList" style="max-height: none; min-height: auto; align-items: stretch;" />
     </ui:VisualElement>
-    <ui:ListView focusable="true" name="ActionList" style="max-height: 40px; min-height: 10px;" />
 </ui:UXML>

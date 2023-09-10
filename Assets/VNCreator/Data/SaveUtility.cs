@@ -26,6 +26,8 @@ namespace VNCreator
                     case NodeType.Action:
                     {
                         var action = (CommandNode)graphNode;
+                        
+                        action.EntityCache.SetValue("nodePosition", action.GetPosition());
                     }
                         break;
                     case NodeType.Dialogue:

@@ -71,8 +71,6 @@ namespace VNCreator.Editors.Graph
                 _outputPort.portName = "Next";
                 actionNode.outputContainer.Add(_outputPort);
             }
-            
-            actionNode.SetPosition(new Rect((new Vector2(viewTransform.position.x, viewTransform.position.y) * -(1 / scale)) + (mousePos * (1/scale)), Vector2.one));
 
             actionNode.mainContainer.Add(actionNode.visuals);
 
