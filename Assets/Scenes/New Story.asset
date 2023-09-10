@@ -265,6 +265,29 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   characterSprList: []
   backgroundSprList: []
+--- !u!114 &-6634044424109290148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff6e7b6e203248adafd6313b912c3d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 7b29ff399e7587545b6c323e30fdb4f2
+  title: 
+  commandActions: []
+  nodePosition:
+    serializedVersion: 2
+    x: 746.4001
+    y: 161.60002
+    width: 499.2
+    height: 389.60004
+  isEndNode: 0
+  isStartNode: 0
 --- !u!114 &-6376999739774349111
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -426,10 +449,10 @@ MonoBehaviour:
   - 
   nodePosition:
     serializedVersion: 2
-    x: 746.5
-    y: 161
-    width: 499
-    height: 390
+    x: 746.4001
+    y: 161.60002
+    width: 499.2
+    height: 389.60004
   soundEffect: {fileID: 0}
   backgroundMusic: {fileID: 0}
   characterSprList: []
@@ -627,7 +650,7 @@ MonoBehaviour:
   nodes:
   - {fileID: -5144056470620532457}
   commandDatas:
-  - {fileID: 1730070230850295575}
+  - {fileID: -6634044424109290148}
 --- !u!114 &18701796619799512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -735,29 +758,6 @@ MonoBehaviour:
   backgroundMusic: {fileID: 0}
   characterSprList: []
   backgroundSprList: []
---- !u!114 &1730070230850295575
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff6e7b6e203248adafd6313b912c3d54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: c1ec7b245008142c285c41b45f2567ed
-  title: 
-  commandActions: []
-  nodePosition:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  isEndNode: 0
-  isStartNode: 0
 --- !u!114 &1913447115898592217
 MonoBehaviour:
   m_ObjectHideFlags: 1

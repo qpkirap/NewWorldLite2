@@ -65,18 +65,18 @@ namespace VNCreator
 
         public void LoadGraph(StoryObject story, ExtendedGraphView graph)
         {
-            foreach (var data in story.nodes)
-            {
-                var tempNode = graph.CreateDialogueNode("", data.NodePosition.position, data.Choices, data.ChoiceOptions.ToList(), data.StartNode, data.EndNode, data);
-                
-                graph.AddElement(tempNode);
-            }
-            
             foreach (var command in story.commandDatas)
             {
                 var commandNode = graph.GenerateActionNode(command.NodePosition.position, command.IsStartNode, command.IsEndNode, command);
                 
                 graph.Add(commandNode);
+            }
+            
+            foreach (var data in story.nodes)
+            {
+                var tempNode = graph.CreateDialogueNode("", data.NodePosition.position, data.Choices, data.ChoiceOptions.ToList(), data.StartNode, data.EndNode, data);
+                
+                graph.AddElement(tempNode);
             }
 
             GenerateLinks(story, graph);
